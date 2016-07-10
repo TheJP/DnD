@@ -18,7 +18,6 @@
     <div class="ui top green fixed menu">
         <a asp-area="" asp-controller="Home" asp-action="Index" class="@Html.IsActiveAction("Index", "Home") item">Home</a>
         <a asp-area="" asp-controller="Home" asp-action="About" class="@Html.IsActiveAction("About", "Home") item">About</a>
-        <a asp-area="" asp-controller="Home" asp-action="Contact" class="@Html.IsActiveAction("Contact", "Home") item">Contact</a>
     </div>
     <div id="content" class="ui container">
         <h1>@ViewData["Title"]</h1>

@@ -4,8 +4,8 @@
   "dependencies": {
     "semantic": "2.2.2",
     "jquery": "3.1.0",
-    "jquery-validation": "1.15.0",
-	"jquery-validation-unobtrusive": "3.2.6"
+    "jquery-validation": "1.14.0",
+    "jquery-validation-unobtrusive": "3.2.6"
   },
   "resolutions": {
     "jquery": ">= 1.7.2"

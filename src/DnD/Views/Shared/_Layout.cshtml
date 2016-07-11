@@ -16,8 +16,8 @@
 </head>
 <body>
     <div class="ui top green fixed menu">
-        <a asp-area="" asp-controller="Home" asp-action="Index" class="@Html.IsActiveAction("Index", "Home") item">Home</a>
-        <a asp-area="" asp-controller="Home" asp-action="About" class="@Html.IsActiveAction("About", "Home") item">About</a>
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="@Html.IsActiveAction("Index", "Home") item"><i class="home icon"></i> Home</a>
+        <a asp-area="" asp-controller="Home" asp-action="About" class="@Html.IsActiveAction("About", "Home") item"><i class="info icon"></i> About</a>
         <div class="right menu">
             @await Html.PartialAsync("_LoginPartial")
         </div>

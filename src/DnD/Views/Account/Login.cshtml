@@ -11,13 +11,7 @@
 <section>
     <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="ui form summary">
         <h4 class="ui dividing header">Use a local account to log in.</h4>
-        <div class="ui warning icon message validation-summary">
-            <i class="warning circle icon"></i>
-            <div class="content">
-                <div class="header">Errors</div>
-                <div asp-validation-summary="All" class="summary-content"></div>
-            </div>
-        </div>
+        @await Html.PartialAsync("_FormErrorSummary")
         <div class="field">
             <label asp-for="Email"></label>
             <input asp-for="Email" />

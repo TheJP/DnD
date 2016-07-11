@@ -6,11 +6,13 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" class="@Html.IsActiveAction(controllers: "Manage") item">@UserManager.GetUserName(User)</a>
-    <a asp-area="" asp-controller="Account" asp-action="LogOff">Log off</a>
+    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" class="@Html.IsActiveAction(controllers: "Manage") right item">@UserManager.GetUserName(User)</a>
+    <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logout-form">
+        <a onclick="$('#logout-form').submit();" class="item">Log off</a>
+    </form>
 }
 else
 {
-    <a asp-area="" asp-controller="Account" asp-action="Register" class="@Html.IsActiveAction("Register", "Account") item"><i class="icon add user"></i> Register</a>
+    <a asp-area="" asp-controller="Account" asp-action="Register" class="@Html.IsActiveAction("Register", "Account") right item"><i class="icon add user"></i> Register</a>
     <a asp-area="" asp-controller="Account" asp-action="Login" class="@Html.IsActiveAction("Login", "Account") item"><i class="icon user"></i> Log in</a>
 }

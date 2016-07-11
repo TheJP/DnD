@@ -21,12 +21,16 @@
         <div class="field">
             <label asp-for="Email"></label>
             <input asp-for="Email" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="ui pointing red basic label error-label">
+                <span asp-validation-for="Email"></span>
+            </div>
         </div>
         <div class="field">
             <label asp-for="Password"></label>
             <input asp-for="Password" />
-            <span asp-validation-for="Password" class="text-danger"></span>
+            <div class="ui pointing red basic label error-label">
+                <span asp-validation-for="Password"></span>
+            </div>
         </div>
         <div class="field">
             <div class="ui checkbox">

@@ -1,3 +1,11 @@
 ﻿#content {
     padding-top: 55px;
 }
+
+.ui.label.error-label {
+    display: none;
+}
+
+.field.error .ui.label.error-label {
+    display: inline-block;
+}

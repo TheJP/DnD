@@ -9,12 +9,13 @@ namespace DnD
 {
     public static class HelperExtensions
     {
-        public static string IsActiveAction(this IHtmlHelper html, string actions, string controllers = null, string cssClass = "active")
+        public static string IsActiveAction(this IHtmlHelper html, string actions = null, string controllers = null, string cssClass = "active")
         {
             RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
             string currentAction = routeValues["action"].ToString();
             string currentController = routeValues["controller"].ToString();
 
+            actions = actions ?? currentAction;
             controllers = controllers ?? currentController;
 
             if (!actions.Split(',').Select(a => a.Trim()).Contains(currentAction)) { return string.Empty; }

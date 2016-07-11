@@ -7,6 +7,13 @@
     <h4 class="ui dividing header">Create a new account.</h4>
     @await Html.PartialAsync("_FormErrorSummary")
     <div class="field">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" />
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="Username"></span>
+        </div>
+    </div>
+    <div class="field">
         <label asp-for="Email"></label>
         <input asp-for="Email" />
         <div class="ui pointing red basic label error-label">

@@ -9,7 +9,11 @@ namespace DnD.Models
     public class Character
     {
         public int CharacterId { get; set; }
+
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        public ApplicationUser Owner { get; set; }
     }
 }

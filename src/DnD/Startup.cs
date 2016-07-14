@@ -71,6 +71,12 @@ namespace DnD
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            //Seed database
+            using(var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                DataSeed.Seed(serviceScope);
+            }
+
             app.UseStaticFiles();
 
             app.UseIdentity();

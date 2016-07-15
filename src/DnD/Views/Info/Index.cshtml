@@ -1,0 +1,37 @@
+@model IEnumerable<DnD.Models.Race>
+
+@{
+    ViewData["Title"] = "Races";
+}
+
+<section class="ui two cards">
+@foreach (var item in Model)
+{
+    <div class="ui card">
+        <div class="content">
+            <div class="header"><i class="green user icon"></i> @Html.DisplayFor(_ => item.Name)</div>
+            <div class="description">@Html.DisplayFor(_ => item.Lore)</div>
+        </div>
+        <div class="extra content">
+            <table class="ui inverted green selectable center aligned table">
+                <tr>
+                @foreach(var attribute in item.Attributes)
+                {
+                    <th data-tooltip="@Html.DisplayFor(_ => attribute.Attribute.Name)">@Html.DisplayFor(_ => attribute.Attribute.ShortName)</th>
+                }
+                </tr>
+                <tr>
+                @foreach (var attribute in item.Attributes)
+                {
+                    <td>@Html.DisplayFor(_ => attribute.Value)</td>
+                }
+                </tr>
+            </table>
+        </div>
+    </div>
+}
+</section>
+
+<h4 class="ui dividing header">Lebens- und Manapunkte</h4>
+<p>Drachen starten mit 10 Lebenspunkten und 10 Manapunkten.</p>
+<p>Alle anderen Rassen können zu Beginn 15 Punkte frei auf Leben und Mana verteilen.</p>

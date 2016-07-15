@@ -148,8 +148,7 @@ namespace DnD.Data.Migrations
             migrationBuilder.AddColumn<int>(
                 name: "CharacterId",
                 table: "Characters",
-                nullable: false,
-                defaultValue: 0)
+                nullable: false)
                 .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             migrationBuilder.AddPrimaryKey(

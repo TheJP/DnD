@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DnD.Models
 {
-    public class Character
+    public class RaceAttribute
     {
         public int Id { get; set; }
-
-        [Required]
-        public string Name { get; set; }
-
-        public string OwnerId { get; set; }
-        [Required]
-        public ApplicationUser Owner { get; set; }
 
         public int RaceId { get; set; }
         [Required]
         public Race Race { get; set; }
+
+        public int AttributeId { get; set; }
+        [Required]
+        public DnDAttribute Attribute { get; set; }
+
+        /// <summary>
+        /// Default value, that this race has in the given attribute.
+        /// </summary>
+        public int Value { get; set; }
     }
 }

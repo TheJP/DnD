@@ -27,5 +27,11 @@ namespace DnD.Models
 
         [InverseProperty("Adventurer")]
         public List<AdventureParticipation> Adventures { get; set; }
+
+        [InverseProperty("Character")]
+        public List<Gold> Gold { get; set; }
+
+        [InverseProperty("Character")]
+        public List<Experience> Experience { get; set; }
     }
 }

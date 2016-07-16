@@ -15,6 +15,8 @@ namespace DnD.Data
         public DbSet<AdventureParticipation> AdventureParticipations { get; set; }
         public DbSet<DnDAttribute> Attributes { get; set; }
         public DbSet<Character> Characters { get; set; }
+        public DbSet<Gold> Gold { get; set; }
+        public DbSet<Experience> Experience { get; set; }
         public DbSet<Race> Races { get; set; }
         public DbSet<RaceAttribute> RaceAttributes { get; set; }
 

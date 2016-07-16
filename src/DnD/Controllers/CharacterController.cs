@@ -9,18 +9,23 @@ using DnD.Data;
 using DnD.Models;
 using DnD.Models.CharacterViewModels;
 using DnD.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace DnD.Controllers
 {
+    [Authorize]
     public class CharacterController : Controller
     {
         private readonly ApplicationDbContext context;
         private readonly CharacterManager manager;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public CharacterController(ApplicationDbContext context, CharacterManager manager)
+        public CharacterController(ApplicationDbContext context, CharacterManager manager, UserManager<ApplicationUser> userManager)
         {
             this.context = context;
             this.manager = manager;
+            this.userManager = userManager;
         }
 
         // GET: Character
@@ -65,7 +70,7 @@ namespace DnD.Controllers
                     Name = character.Name,
                     Gender = character.Gender,
                     RaceId = character.RaceId,
-                    OwnerId = User.Identity.Name
+                    Owner = await userManager.GetUserAsync(User)
                 };
                 await manager.CreateAsync(newEntity);
                 return RedirectToAction("Index");
@@ -77,19 +82,12 @@ namespace DnD.Controllers
         // GET: Character/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) { return NotFound(); }
             var character = await context.Characters.SingleOrDefaultAsync(m => m.Id == id);
-            if (character == null)
-            {
-                return NotFound();
-            }
-            ViewData["OwnerId"] = new SelectList(context.Users, "Id", "Id", character.OwnerId);
-            ViewData["RaceId"] = new SelectList(context.Races, "Id", "Name", character.RaceId);
-            return View(character);
+            if (character == null) { return NotFound(); }
+
+            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", character.RaceId);
+            return View(new CharacterViewModel() { Id = character.Id, Gender = character.Gender, Name = character.Name, RaceId = character.RaceId });
         }
 
         // POST: Character/Edit/5
@@ -97,35 +95,26 @@ namespace DnD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Gender,Name,OwnerId,RaceId")] Character character)
+        public async Task<IActionResult> Edit(int id, CharacterViewModel character)
         {
-            if (id != character.Id)
-            {
-                return NotFound();
-            }
+            if (!character.Id.HasValue || id != character.Id.Value) { return NotFound(); }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    context.Update(character);
+                    //TODO
+                    //context.Update(character);
                     await context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CharacterExists(character.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!CharacterExists(id)) { return NotFound(); }
+                    else { throw; }
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["OwnerId"] = new SelectList(context.Users, "Id", "Id", character.OwnerId);
-            ViewData["RaceId"] = new SelectList(context.Races, "Id", "Name", character.RaceId);
+            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", character.RaceId);
             return View(character);
         }
 

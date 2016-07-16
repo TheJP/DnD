@@ -9,7 +9,8 @@ namespace DnD.Models.CharacterViewModels
 {
     public class CharacterViewModel
     {
-        public int Id { get; set; }
+        [HiddenInput]
+        public int? Id { get; set; }
 
         [Required]
         [StringLength(255)]

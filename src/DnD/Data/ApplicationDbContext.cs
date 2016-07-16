@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using DnD.Models;
 using Microsoft.EntityFrameworkCore.Metadata;
+using DnD.Models.CharacterViewModels;
 
 namespace DnD.Data
 {

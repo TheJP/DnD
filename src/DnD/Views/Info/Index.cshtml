@@ -4,7 +4,7 @@
     ViewData["Title"] = "Races";
 }
 
-<section class="ui two cards">
+<section class="ui stackable two cards">
 @foreach (var item in Model)
 {
     <div class="ui card">
@@ -13,7 +13,7 @@
             <div class="description">@Html.DisplayFor(_ => item.Lore)</div>
         </div>
         <div class="extra content">
-            <table class="ui inverted green selectable center aligned table">
+            <table class="ui inverted green selectable center aligned unstackable table">
                 <tr>
                 @foreach(var attribute in item.Attributes)
                 {

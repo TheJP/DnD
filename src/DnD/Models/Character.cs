@@ -14,6 +14,9 @@ namespace DnD.Models
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public string Gender { get; set; }
+
         public string OwnerId { get; set; }
         [Required]
         public ApplicationUser Owner { get; set; }
@@ -21,5 +24,8 @@ namespace DnD.Models
         public int RaceId { get; set; }
         [Required]
         public Race Race { get; set; }
+
+        [InverseProperty("Adventurer")]
+        public List<AdventureParticipation> Adventures { get; set; }
     }
 }

@@ -11,10 +11,12 @@ namespace DnD.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Character> Characters { get; set; }
+        public DbSet<Adventure> Adventures { get; set; }
+        public DbSet<AdventureParticipation> AdventureParticipations { get; set; }
         public DbSet<DnDAttribute> Attributes { get; set; }
-        public DbSet<RaceAttribute> RaceAttributes { get; set; }
+        public DbSet<Character> Characters { get; set; }
         public DbSet<Race> Races { get; set; }
+        public DbSet<RaceAttribute> RaceAttributes { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -24,12 +26,23 @@ namespace DnD.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
             builder.Entity<DnDAttribute>()
                 .Property(a => a.Type)
                 .HasDefaultValue(DnDAttribute.LevelUp.WithCharacterPoints);
+
             builder.Entity<Character>()
                 .HasOne(c => c.Race)
                 .WithMany(r => r.Characters)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Adventure>()
+                .HasOne(a => a.DungeonMaster)
+                .WithMany(u => u.Adventures)
+                .OnDelete(DeleteBehavior.Restrict); //Don't delete all adventures, when deleting a user
+            builder.Entity<Adventure>()
+                .HasOne(a => a.Next)
+                .WithOne(a => a.Previous)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

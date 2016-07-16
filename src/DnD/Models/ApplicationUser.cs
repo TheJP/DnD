@@ -4,12 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DnD.Models
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        [Required]
         public string DisplayName { get; set; }
+
+        /// <summary>Adventures, in which this user is the dungeon master.</summary>
+        [InverseProperty("DungeonMaster")]
+        public List<Adventure> Adventures { get; set; }
     }
 }

@@ -9,7 +9,7 @@
                 label.closest('.field').removeClass('error');
             }
         }, 200);
-    };
+    }
 
     function showSummary() {
         var form = this;
@@ -22,7 +22,7 @@
             }
             $(form).find('input, select, textarea').each(errorLabelChange);
         }, 10);
-    };
+    }
 
     $(document).ready(function () {
         $('form.form.summary')
@@ -33,6 +33,9 @@
             .change(errorLabelChange)
             .click(errorLabelChange)
             .keydown(errorLabelChange);
+
         $('form.form .checkbox').checkbox();
+        $('.dropdown.create-default').dropdown();
+        $('.dropdown.allow-add').dropdown({ allowAdditions: true });
     });
 })();

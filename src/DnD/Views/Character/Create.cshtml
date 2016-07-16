@@ -1,0 +1,44 @@
+@model DnD.Models.CharacterViewModels.CharacterViewModel
+
+@{
+    ViewData["Title"] = "Create Character";
+}
+
+<form asp-action="Create" class="ui form summary">
+    @await Html.PartialAsync("_FormErrorSummary")
+    <div class="field">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="Name" class="text-danger" />
+        </div>
+    </div>
+    <div class="field">
+        <label asp-for="Gender"></label>
+        <div class="ui search selection dropdown allow-add">
+            <input asp-for="Gender" />
+            <i class="dropdown icon"></i>
+            <div class="default text">Select a gender</div>
+            <div class="menu">
+                <div class="item" data-value="male"><i class="@Html.GenderIcon("male") icon"></i> Male</div>
+                <div class="item" data-value="female"><i class="@Html.GenderIcon("female") icon"></i> Female</div>
+                <div class="item" data-value="agender"><i class="@Html.GenderIcon("agender") icon"></i> Agender</div>
+                <div class="item" data-value="other"><i class="@Html.GenderIcon("other") icon"></i> Other</div>
+            </div>
+        </div>
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="Gender" />
+        </div>
+    </div>
+    <div class="field">
+        <label asp-for="RaceId">Race (<a asp-action="Index" asp-controller="Info" @*Href is set by tag helpers*@ target="_blank"><i class="external icon"></i>Info</a>)</label>
+        <select asp-for="RaceId" asp-items="ViewBag.RaceItems"></select>
+    </div>
+    <button type="submit" class="ui button"><i class="add icon"></i>Create</button>
+</form>
+
+<p><a asp-action="Index">Back to List</a></p>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

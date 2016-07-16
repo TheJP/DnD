@@ -22,5 +22,20 @@ namespace DnD
             if (!controllers.Split(',').Select(c => c.Trim()).Contains(currentController)) { return string.Empty; }
             return cssClass;
         }
+
+        private static readonly Dictionary<string, string> genderIcon = new Dictionary<string, string>()
+        {
+            ["male"] = "man",
+            ["female"] = "woman",
+            ["agender"] = "genderless",
+            ["other"] = "other gender"
+        };
+
+        public static string GenderIcon(this IHtmlHelper html, string gender)
+        {
+            gender = gender.ToLower();
+            if (genderIcon.ContainsKey(gender)) { return genderIcon[gender]; }
+            else { return "other gender"; }
+        }
     }
 }

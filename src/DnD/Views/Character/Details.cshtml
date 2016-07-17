@@ -1,29 +1,35 @@
 @model DnD.Models.Character
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Character Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Character</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
+<div class="ui raised segment">
+    <span class="ui green ribbon label"><i class="info icon"></i> Info</span>
+    <p></p>
+    <div class="ui horizontal divided list">
+        <div class="item">
+            <div class="content" data-tooltip="Name of this character"><h2>@Html.DisplayFor(model => model.Name)</h2></div>
+        </div>
+        <div class="item">
+            <div class="header">@Html.DisplayNameFor(model => model.Race)</div>
+            <div class="content">@Html.DisplayFor(model => model.Race.Name)</div>
+        </div>
+        <div class="item">
+            <div class="header">@Html.DisplayNameFor(model => model.Gender)</div>
+            <div class="content">@Html.DisplayFor(model => model.Gender) <i class="@Html.GenderIcon(Model.Gender) icon"></i></div>
+        </div>
+        <div class="item">
+            <div class="header">@Html.DisplayNameFor(model => model.Gold)</div>
+            <div class="content"><i class="yellow cubes icon"></i> @Model.Gold.Sum(g => g.Value)</div>
+        </div>
+        <div class="item">
+            <div class="header">@Html.DisplayNameFor(model => model.Experience)</div>
+            <div class="content"><i class="purple lab icon"></i> @Model.Experience.Sum(g => g.Value)</div>
+        </div>
+    </div>
 </div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

@@ -1,0 +1,11 @@
+﻿@model DnD.Models.Character
+
+<div class="ui card">
+    <div class="content">
+        <div class="header">
+            <a asp-action="Details" asp-controller="Character" asp-route-id="@Model.Id">@Html.DisplayFor(model => model.Name) (@Html.DisplayFor(model => model.Race.Name))</a>
+            <span data-tooltip="@Html.DisplayFor(model => model.Gender)"><i class="@Html.GenderIcon(Model.Gender) icon"></i></span>
+        </div>
+        <div class="meta">@Html.DisplayFor(model => model.Owner.DisplayName)</div>
+    </div>
+</div>

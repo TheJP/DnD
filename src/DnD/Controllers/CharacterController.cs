@@ -38,16 +38,14 @@ namespace DnD.Controllers
         // GET: Character/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var character = await context.Characters.SingleOrDefaultAsync(m => m.Id == id);
-            if (character == null)
-            {
-                return NotFound();
-            }
+            if (id == null) { return NotFound(); }
+            var character = await context.Characters
+                .Include(c => c.Owner)
+                .Include(c => c.Race)
+                .Include(c => c.Gold)
+                .Include(c => c.Experience)
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (character == null) { return NotFound(); }
 
             return View(character);
         }

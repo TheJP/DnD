@@ -5,7 +5,7 @@
 }
 
 <p><a asp-action="Create" class="ui button"><i class="add icon"></i>Create Character</a></p>
-<table class="ui table">
+@*<table class="ui table">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
@@ -23,4 +23,10 @@
         </tr>
 }
     </tbody>
-</table>
+</table>*@
+<div class="ui cards">
+@foreach(var item in Model)
+{
+    @await Html.PartialAsync("_SmallCharacterCard", item)
+}
+</div>

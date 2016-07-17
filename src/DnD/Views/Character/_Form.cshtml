@@ -31,7 +31,8 @@
         <label asp-for="RaceId">Race (<a asp-action="Index" asp-controller="Info" @*Href is set by tag helpers*@ target="_blank"><i class="external icon"></i>Info</a>)</label>
         <select asp-for="RaceId" asp-items="ViewBag.RaceItems" class="ui selection dropdown create-default"></select>
     </div>
-    <button type="submit" class="ui button"><i class="@ViewData["Icon"] icon"></i>@ViewData["Button"] </button>
+    <button type="submit" class="ui green button"><i class="@ViewData["Icon"] icon"></i>@ViewData["Button"] </button>
+    @if (Model.Id.HasValue){ <a asp-action="Details" asp-route-id="@Model.Id" class="ui blue button"><i class="@Html.CharacterIcon() icon"></i>Character Details</a> }
 </form>
 
 <p><a asp-action="Index">Back to List</a></p>

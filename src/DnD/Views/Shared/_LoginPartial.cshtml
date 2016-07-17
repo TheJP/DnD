@@ -6,9 +6,9 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" class="@Html.IsActiveAction(controllers: "Manage") right item">@((await UserManager.GetUserAsync(User)).DisplayName)</a>
+    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" class="@Html.IsActiveAction(controllers: "Manage") right item"><i class="user icon"></i> @((await UserManager.GetUserAsync(User)).DisplayName)</a>
     <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logout-form">
-        <a onclick="$('#logout-form').submit();" class="item">Log off</a>
+        <a onclick="$('#logout-form').submit();" class="item"><i class="remove user icon"></i> Log off</a>
     </form>
 }
 else

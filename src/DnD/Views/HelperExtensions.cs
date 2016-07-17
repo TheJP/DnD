@@ -31,11 +31,19 @@ namespace DnD
             ["other"] = "other gender"
         };
 
+        /// <summary>Returns the semantic ui icon for the given gender</summary>
         public static string GenderIcon(this IHtmlHelper html, string gender)
         {
             gender = gender.ToLower();
             if (genderIcon.ContainsKey(gender)) { return genderIcon[gender]; }
             else { return "other gender"; }
+        }
+
+        /// <summary>Returns a female or male semantic ui icon randomly.</summary>
+        public static string CharacterIcon(this IHtmlHelper html)
+        {
+            var random = new Random();
+            return random.Next(2) <= 0 ? "female" : "male";
         }
     }
 }

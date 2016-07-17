@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<ApplicationUser> SignInManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,6 +20,10 @@
     <div class="ui top green stackable menu">
         <a asp-area="" asp-controller="Home" asp-action="Index" class="@Html.IsActiveAction("Index", "Home") header item"><i class="home icon"></i> Home</a>
         <a asp-area="" asp-controller="Home" asp-action="About" class="@Html.IsActiveAction("About", "Home") item"><i class="info icon"></i> About</a>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a asp-area="" asp-controller="Character" asp-action="Index" class="@Html.IsActiveAction(controllers: "Character") item"><i class="@Html.CharacterIcon() icon"></i> Characters</a>
+        }
         @await Html.PartialAsync("_LoginPartial")
     </div>
     <div id="content" class="ui container">

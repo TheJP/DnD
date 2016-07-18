@@ -4,26 +4,8 @@
     ViewData["Title"] = "Characters";
 }
 
-<p><a asp-action="Create" class="ui button"><i class="add icon"></i>Create Character</a></p>
-@*<table class="ui table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td><a asp-action="Details" asp-route-id="@item.Id"><i class="green user icon"></i> @Html.DisplayFor(_ => item.Name) (@Html.DisplayFor(_ => item.Race.Name))</a></td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="ui button"><i class="edit icon"></i>Edit</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="ui red button"><i class="delete icon"></i>Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>*@
+<p><a asp-action="Create" class="ui green button"><i class="add icon"></i>Create Character</a></p>
+
 <div class="ui cards">
 @foreach(var item in Model)
 {

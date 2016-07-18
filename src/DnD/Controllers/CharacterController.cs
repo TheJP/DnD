@@ -119,16 +119,12 @@ namespace DnD.Controllers
         // GET: Character/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var character = await context.Characters.SingleOrDefaultAsync(m => m.Id == id);
-            if (character == null)
-            {
-                return NotFound();
-            }
+            if (id == null) { return NotFound(); }
+            var character = await context.Characters
+                .Include(c => c.Race)
+                .Include(c => c.Owner)
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (character == null) { return NotFound(); }
 
             return View(character);
         }

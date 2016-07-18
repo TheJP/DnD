@@ -32,7 +32,10 @@
         <select asp-for="RaceId" asp-items="ViewBag.RaceItems" class="ui selection dropdown create-default"></select>
     </div>
     <button type="submit" class="ui green button"><i class="@ViewData["Icon"] icon"></i>@ViewData["Button"] </button>
-    @if (Model.Id.HasValue){ <a asp-action="Details" asp-route-id="@Model.Id" class="ui blue button"><i class="@Html.CharacterIcon() icon"></i>Character Details</a> }
+    @if (Model != null && Model.Id.HasValue)
+    {
+        <a asp-action="Details" asp-route-id="@Model.Id" class="ui blue button"><i class="@Html.CharacterIcon() icon"></i>Character Details</a>
+    }
 </form>
 
 <p><a asp-action="Index">Back to List</a></p>

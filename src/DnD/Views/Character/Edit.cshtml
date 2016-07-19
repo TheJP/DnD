@@ -5,3 +5,13 @@
 }
 
 @await Html.PartialAsync("_Form", Model, new ViewDataDictionary(ViewData) { ["Button"] = "Edit", ["Icon"] = "write" })
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <environment names="Development">
+        <script src="~/js/characterform.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/characterform.min.js" asp-append-version="true"></script>
+    </environment>
+}

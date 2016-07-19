@@ -15,6 +15,8 @@ namespace DnD.Models
 
         public string Lore { get; set; }
 
+        public bool IsDragon { get; set; } = false;
+
         public List<RaceAttribute> Attributes { get; set; }
 
         public List<Character> Characters { get; set; }

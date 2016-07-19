@@ -33,6 +33,9 @@ namespace DnD.Data
             builder.Entity<DnDAttribute>()
                 .Property(a => a.Type)
                 .HasDefaultValue(DnDAttribute.LevelUp.WithCharacterPoints);
+            builder.Entity<DnDAttribute>()
+                .Property(a => a.Special)
+                .HasDefaultValue(DnDAttribute.Specials.None);
 
             builder.Entity<Character>()
                 .HasOne(c => c.Race)

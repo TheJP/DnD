@@ -15,13 +15,13 @@
         <div class="extra content">
             <table class="ui inverted green selectable center aligned unstackable table">
                 <tr>
-                @foreach(var attribute in item.Attributes)
+                @foreach(var attribute in item.Attributes.OrderBy(a => a.Attribute.Order))
                 {
                     <th data-tooltip="@Html.DisplayFor(_ => attribute.Attribute.Name)">@Html.DisplayFor(_ => attribute.Attribute.ShortName)</th>
                 }
                 </tr>
                 <tr>
-                @foreach (var attribute in item.Attributes)
+                @foreach (var attribute in item.Attributes.OrderBy(a => a.Attribute.Order))
                 {
                     <td>@Html.DisplayFor(_ => attribute.Value)</td>
                 }

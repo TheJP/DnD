@@ -20,6 +20,11 @@ namespace DnD.Models
             WithAbilityPoints
         }
 
+        public enum Specials
+        {
+            None, Protection, Skill, Life, Mana, Scales, Talons, Strength
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -30,5 +35,11 @@ namespace DnD.Models
         public string Name { get; set; }
 
         public LevelUp Type { get; set; }
+
+        public Specials Special { get; set; }
+
+        /// <summary>Can be used to define the order, in which attributes are displayed.</summary>
+        [Required]
+        public int Order { get; set; }
     }
 }

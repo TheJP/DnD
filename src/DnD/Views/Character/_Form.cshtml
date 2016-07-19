@@ -7,7 +7,7 @@
         <label asp-for="Name"></label>
         <input asp-for="Name" />
         <div class="ui pointing red basic label error-label">
-            <span asp-validation-for="Name" />
+            <span asp-validation-for="Name"></span>
         </div>
     </div>
     <div class="field">
@@ -24,12 +24,26 @@
             </div>
         </div>
         <div class="ui pointing red basic label error-label">
-            <span asp-validation-for="Gender" />
+            <span asp-validation-for="Gender"></span>
         </div>
     </div>
     <div class="field">
         <label asp-for="RaceId">Race (<a asp-action="Index" asp-controller="Info" @*Href is set by tag helpers*@ target="_blank"><i class="external icon"></i>Info</a>)</label>
-        <select asp-for="RaceId" asp-items="ViewBag.RaceItems" class="ui selection dropdown create-default"></select>
+        <select asp-for="RaceId" asp-items="ViewBag.RaceItems" class="ui selection dropdown create-default" id="race"></select>
+    </div>
+    <div class="field initial">
+        <label asp-for="InitialLife"></label>
+        <input asp-for="InitialLife" id="initial-life" />
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="InitialLife"></span>
+        </div>
+    </div>
+    <div class="field initial">
+        <label asp-for="InitialMana"></label>
+        <input asp-for="InitialMana" id="initial-mana" />
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="InitialMana"></span>
+        </div>
     </div>
     <button type="submit" class="ui green button"><i class="@ViewData["Icon"] icon"></i>@ViewData["Button"] </button>
     @if (Model != null && Model.Id.HasValue)
@@ -39,7 +53,3 @@
 </form>
 
 <p><a asp-action="Index">Back to List</a></p>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

@@ -28,6 +28,18 @@ namespace DnD.Controllers
             this.userManager = userManager;
         }
 
+        private async Task<Character> CharacterFromViewModel(CharacterViewModel viewModel, Character character = null)
+        {
+            if(character == null) { character = new Character(); }
+            character.Name = viewModel.Name;
+            character.Gender = viewModel.Gender;
+            character.RaceId = viewModel.RaceId;
+            character.Owner = await userManager.GetUserAsync(User);
+            character.InitialLife = viewModel.InitialLife;
+            character.InitialMana = viewModel.InitialMana;
+            return character;
+        }
+
         // GET: Character
         public async Task<IActionResult> Index()
         {
@@ -59,22 +71,15 @@ namespace DnD.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CharacterViewModel character)
+        public async Task<IActionResult> Create(CharacterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var newEntity = new Character()
-                {
-                    Name = character.Name,
-                    Gender = character.Gender,
-                    RaceId = character.RaceId,
-                    Owner = await userManager.GetUserAsync(User)
-                };
-                await manager.CreateAsync(newEntity);
+                await manager.CreateAsync(await CharacterFromViewModel(viewModel));
                 return RedirectToAction("Index");
             }
-            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", character.RaceId);
-            return View(character);
+            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", viewModel.RaceId);
+            return View(viewModel);
         }
 
         // GET: Character/Edit/5
@@ -85,7 +90,15 @@ namespace DnD.Controllers
             if (character == null) { return NotFound(); }
 
             ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", character.RaceId);
-            return View(new CharacterViewModel() { Id = character.Id, Gender = character.Gender, Name = character.Name, RaceId = character.RaceId });
+            return View(new CharacterViewModel()
+            {
+                Id = character.Id,
+                Gender = character.Gender,
+                Name = character.Name,
+                RaceId = character.RaceId,
+                InitialLife = character.InitialLife,
+                InitialMana = character.InitialMana
+            });
         }
 
         // POST: Character/Edit/5
@@ -93,17 +106,15 @@ namespace DnD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CharacterViewModel character)
+        public async Task<IActionResult> Edit(int id, CharacterViewModel viewModel)
         {
-            if (!character.Id.HasValue || id != character.Id.Value) { return NotFound(); }
+            if (!viewModel.Id.HasValue || id != viewModel.Id.Value) { return NotFound(); }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //TODO
-                    //context.Update(character);
-                    await context.SaveChangesAsync();
+                    await manager.UpdateAsync(await CharacterFromViewModel(viewModel, await context.Characters.SingleAsync(c => c.Id == id)));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -112,8 +123,8 @@ namespace DnD.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", character.RaceId);
-            return View(character);
+            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", viewModel.RaceId);
+            return View(viewModel);
         }
 
         // GET: Character/Delete/5

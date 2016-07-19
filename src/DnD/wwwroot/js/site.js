@@ -38,4 +38,5 @@
         $('.dropdown.create-default').dropdown();
         $('.dropdown.allow-add').dropdown({ allowAdditions: true });
     });
+
 })();

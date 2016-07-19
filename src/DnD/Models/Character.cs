@@ -9,6 +9,9 @@ namespace DnD.Models
 {
     public class Character
     {
+        /// <summary>InitialLife + InitialMana has to be equal to this number. (Except for dragons, that start with predefined stats.)</summary>
+        public const int InitialLifePlusMana = 15;
+
         public int Id { get; set; }
 
         [Required]
@@ -16,6 +19,12 @@ namespace DnD.Models
 
         [Required]
         public string Gender { get; set; }
+
+        [Required]
+        public int InitialLife { get; set; }
+
+        [Required]
+        public int InitialMana { get; set; }
 
         public string OwnerId { get; set; }
         [Required]

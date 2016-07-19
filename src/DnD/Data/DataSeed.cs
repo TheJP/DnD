@@ -17,16 +17,16 @@ namespace DnD.Data
             if (!context.Attributes.Any() && !context.Races.Any())
             {
                 //Create new attributes
-                var life = new DnDAttribute() { Name = "Leben", ShortName = "LP", Type = LevelUp.WithCharacterPoints };
-                var mana = new DnDAttribute() { Name = "Mana", ShortName = "M", Type = LevelUp.WithCharacterPoints };
-                var courage = new DnDAttribute() { Name = "Mut", ShortName = "Mut", Type = LevelUp.WithCharacterPoints };
-                var strength = new DnDAttribute() { Name = "Stärke", ShortName = "Str", Type = LevelUp.WithCharacterPoints };
-                var intelligence = new DnDAttribute() { Name = "Intelligenz", ShortName = "Int", Type = LevelUp.WithCharacterPoints };
-                var charisma = new DnDAttribute() { Name = "Charisma", ShortName = "C", Type = LevelUp.WithCharacterPoints };
-                var skill = new DnDAttribute() { Name = "Geschick", ShortName = "G", Type = LevelUp.WithCharacterPoints };
-                var protection = new DnDAttribute() { Name = "Schutz", ShortName = "S", Type = LevelUp.Custom };
-                var scales = new DnDAttribute() { Name = "Schuppen", ShortName = "Spn", Type = LevelUp.WithAbilityPoints };
-                var talons = new DnDAttribute() { Name = "Krallen", ShortName = "K", Type = LevelUp.WithAbilityPoints };
+                var life = new DnDAttribute() { Name = "Leben", ShortName = "LP", Type = LevelUp.WithCharacterPoints, Special = Specials.Life, Order = 0 };
+                var mana = new DnDAttribute() { Name = "Mana", ShortName = "M", Type = LevelUp.WithCharacterPoints, Special = Specials.Mana, Order = 100 };
+                var courage = new DnDAttribute() { Name = "Mut", ShortName = "Mut", Type = LevelUp.WithCharacterPoints, Order = 200 };
+                var strength = new DnDAttribute() { Name = "Stärke", ShortName = "Str", Type = LevelUp.WithCharacterPoints, Special = Specials.Strength, Order = 300 };
+                var intelligence = new DnDAttribute() { Name = "Intelligenz", ShortName = "Int", Type = LevelUp.WithCharacterPoints, Order = 400 };
+                var charisma = new DnDAttribute() { Name = "Charisma", ShortName = "C", Type = LevelUp.WithCharacterPoints, Order = 500 };
+                var skill = new DnDAttribute() { Name = "Geschick", ShortName = "G", Type = LevelUp.WithCharacterPoints, Special = Specials.Skill, Order = 600 };
+                var scales = new DnDAttribute() { Name = "Schuppen", ShortName = "Spn", Type = LevelUp.WithAbilityPoints, Special = Specials.Scales, Order = 700 };
+                var talons = new DnDAttribute() { Name = "Krallen", ShortName = "K", Type = LevelUp.WithAbilityPoints, Special = Specials.Talons, Order = 800 };
+                var protection = new DnDAttribute() { Name = "Schutz", ShortName = "S", Type = LevelUp.Custom, Special = Specials.Protection, Order = 900 };
 
                 //Add attributes to db
                 context.Attributes.AddRange(life, mana, courage, strength, intelligence, charisma, skill, protection, scales, talons);
@@ -43,6 +43,9 @@ namespace DnD.Data
                         new RaceAttribute() { Attribute = intelligence, Value = 3 },
                         new RaceAttribute() { Attribute = charisma, Value = 3 },
                         new RaceAttribute() { Attribute = skill, Value = 3 },
+                        //Default values
+                        new RaceAttribute() { Attribute = life, Value = 9 },
+                        new RaceAttribute() { Attribute = mana, Value = 6 },
                     }
                 };
 
@@ -60,6 +63,9 @@ namespace DnD.Data
                         new RaceAttribute() { Attribute = intelligence, Value = 3 },
                         new RaceAttribute() { Attribute = charisma, Value = 4 },
                         new RaceAttribute() { Attribute = skill, Value = 4 },
+                        //Default values
+                        new RaceAttribute() { Attribute = life, Value = 9 },
+                        new RaceAttribute() { Attribute = mana, Value = 6 },
                     }
                 };
 
@@ -78,6 +84,9 @@ namespace DnD.Data
                         new RaceAttribute() { Attribute = intelligence, Value = 3 },
                         new RaceAttribute() { Attribute = charisma, Value = 3 },
                         new RaceAttribute() { Attribute = skill, Value = 4 },
+                        //Default values
+                        new RaceAttribute() { Attribute = life, Value = 9 },
+                        new RaceAttribute() { Attribute = mana, Value = 6 },
                     }
                 };
 
@@ -97,6 +106,9 @@ namespace DnD.Data
                         new RaceAttribute() { Attribute = intelligence, Value = 2 },
                         new RaceAttribute() { Attribute = charisma, Value = 3 },
                         new RaceAttribute() { Attribute = skill, Value = 3 },
+                        //Default values
+                        new RaceAttribute() { Attribute = life, Value = 10 },
+                        new RaceAttribute() { Attribute = mana, Value = 5 },
                     }
                 };
 
@@ -115,6 +127,9 @@ namespace DnD.Data
                         new RaceAttribute() { Attribute = intelligence, Value = 5 },
                         new RaceAttribute() { Attribute = charisma, Value = 3 },
                         new RaceAttribute() { Attribute = skill, Value = 4 },
+                        //Default values
+                        new RaceAttribute() { Attribute = life, Value = 7 },
+                        new RaceAttribute() { Attribute = mana, Value = 8 },
                     }
                 };
 
@@ -134,6 +149,9 @@ namespace DnD.Data
                         new RaceAttribute() { Attribute = intelligence, Value = 2 },
                         new RaceAttribute() { Attribute = charisma, Value = 1 },
                         new RaceAttribute() { Attribute = skill, Value = 2 },
+                        //Default values
+                        new RaceAttribute() { Attribute = life, Value = 10 },
+                        new RaceAttribute() { Attribute = mana, Value = 5 },
                     }
                 };
 
@@ -151,6 +169,9 @@ namespace DnD.Data
                         new RaceAttribute() { Attribute = intelligence, Value = 2 },
                         new RaceAttribute() { Attribute = charisma, Value = 2 },
                         new RaceAttribute() { Attribute = skill, Value = 2 },
+                        //Default values
+                        new RaceAttribute() { Attribute = life, Value = 10 },
+                        new RaceAttribute() { Attribute = mana, Value = 5 },
                     }
                 };
 
@@ -170,6 +191,9 @@ namespace DnD.Data
                         new RaceAttribute() { Attribute = intelligence, Value = 2 },
                         new RaceAttribute() { Attribute = charisma, Value = 1 },
                         new RaceAttribute() { Attribute = skill, Value = 4 },
+                        //Default values
+                        new RaceAttribute() { Attribute = life, Value = 10 },
+                        new RaceAttribute() { Attribute = mana, Value = 5 },
                     }
                 };
 
@@ -185,6 +209,7 @@ namespace DnD.Data
                         "die durch ihren leichten Körperbau schnell und gewandt in der Luft manövrieren können. " +
                         "Vorteil: Drachen können fliegen und damit dreimal pro Tag reisen. " +
                         "Nachteil: Drachen können normale Gebäude nicht betreten (man kann aber in das Gebäude hineinrufen).",
+                    IsDragon = true,
                     Attributes = new List<RaceAttribute>()
                     {
                         new RaceAttribute() { Attribute = courage, Value = 3 },
@@ -220,6 +245,9 @@ namespace DnD.Data
                         new RaceAttribute() { Attribute = intelligence, Value = 4 },
                         new RaceAttribute() { Attribute = charisma, Value = 2 },
                         new RaceAttribute() { Attribute = skill, Value = 5 },
+                        //Default values
+                        new RaceAttribute() { Attribute = life, Value = 8 },
+                        new RaceAttribute() { Attribute = mana, Value = 7 },
                     }
                 };
 

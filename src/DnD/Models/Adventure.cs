@@ -13,6 +13,12 @@ namespace DnD.Models
 
         public string Name { get; set; }
 
+        [MaxLength(5000)]
+        public string Description { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+
         public int? PreviousId { get; set; }
         public Adventure Previous { get; set; }
 

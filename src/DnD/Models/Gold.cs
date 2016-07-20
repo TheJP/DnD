@@ -26,5 +26,8 @@ namespace DnD.Models
         public int Value { get; set; }
 
         public string Description { get; set; }
+
+        [DataType(DataType.DateTime)]
+        public DateTime Date { get; set; }
     }
 }

@@ -8,9 +8,10 @@ using DnD.Data;
 namespace DnD.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160719181743_AdventureDateAndDescription")]
+    partial class AdventureDateAndDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -180,10 +181,6 @@ namespace DnD.Data.Migrations
 
                     b.Property<int>("CharacterId");
 
-                    b.Property<DateTime>("Date")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("getdate()");
-
                     b.Property<string>("Description");
 
                     b.Property<int?>("LootFromId");
@@ -205,10 +202,6 @@ namespace DnD.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("CharacterId");
-
-                    b.Property<DateTime>("Date")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("Description");
 

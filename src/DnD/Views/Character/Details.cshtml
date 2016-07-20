@@ -4,7 +4,7 @@
     ViewData["Title"] = "Character Details";
 }
 
-<div class="ui raised segments">
+<section class="ui raised segments">
     <div class="ui segment">
         <span class="ui green ribbon label"><i class="info icon"></i> Info</span>
         <p></p>
@@ -38,6 +38,21 @@
         <a asp-action="Edit" asp-route-id="@Model.Id" class="ui green button"><i class="write icon"></i>Edit</a>
         <a asp-action="Delete" asp-route-id="@Model.Id" class="ui red button"><i class="delete icon"></i>Delete</a>
     </div>
-</div>
+</section>
+
+<section class="ui two column grid">
+    <div class="column">
+        <div class="ui raised segment">
+            <span class="ui yellow ribbon label"><i class="cubes icon"></i> Gold</span>
+            <h2>Gold</h2>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui raised segment">
+            <span class="ui purple right ribbon label"><i class="lab icon"></i> Experience</span>
+            <h2>Experience</h2>
+        </div>
+    </div>
+</section>
 
 <div><a asp-action="Index">Back to List</a></div>

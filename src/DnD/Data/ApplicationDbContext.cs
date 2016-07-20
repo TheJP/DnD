@@ -50,6 +50,17 @@ namespace DnD.Data
                 .HasOne(a => a.Next)
                 .WithOne(a => a.Previous)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Adventure>()
+                .Property(a => a.Date)
+                .HasDefaultValueSql("getdate()");
+
+            builder.Entity<Gold>()
+                .Property(g => g.Date)
+                .HasDefaultValueSql("getdate()");
+
+            builder.Entity<Experience>()
+                .Property(e => e.Date)
+                .HasDefaultValueSql("getdate()");
         }
     }
 }

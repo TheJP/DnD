@@ -21,7 +21,10 @@ namespace DnD.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = context.Adventures.Include(a => a.DungeonMaster).Include(a => a.Next);
+            var applicationDbContext = context.Adventures
+                .Include(a => a.DungeonMaster)
+                .Include(a => a.Previous)
+                .Include(a => a.Next);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -43,8 +46,8 @@ namespace DnD.Controllers
 
         public IActionResult Create()
         {
-            ViewData["DungeonMasterId"] = new SelectList(context.Users, "Id", "Id");
-            ViewData["NextId"] = new SelectList(context.Adventures, "Id", "DungeonMasterId");
+            ViewData["DungeonMasters"] = new SelectList(context.Users, "Id", "DisplayName");
+            ViewData["Adventures"] = new SelectList(context.Adventures, "Id", "Name");
             return View();
         }
 

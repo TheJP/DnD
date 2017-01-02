@@ -1,0 +1,50 @@
+﻿@model DnD.Models.AdventureViewModels.AdventureViewModel
+
+<form asp-action="@ViewContext.RouteData.Values["action"]" class="ui form summary">
+    @await Html.PartialAsync("_FormErrorSummary")
+    <input asp-for="Id" />
+    <div class="field">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="Name"></span>
+        </div>
+    </div>
+    <div class="field">
+        <label asp-for="Date"></label>
+        <input asp-for="Date" />
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="Date"></span>
+        </div>
+    </div>
+    <div class="field">
+        <label asp-for="DungeonMasterId"></label>
+        <select asp-for="DungeonMasterId" asp-items="ViewBag.DungeonMasters" class="ui selection dropdown create-default"></select>
+    </div>
+    <div class="field">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description"></textarea>
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="Description"></span>
+        </div>
+    </div>
+    @*Only show those two fields if there are other adventures*@
+    @if (ViewBag.Adventures.GetEnumerator().MoveNext())
+    {
+        <div class="field">
+            <label asp-for="PreviousId"></label>
+            <select asp-for="PreviousId" asp-items="ViewBag.Adventures" class="ui selection dropdown create-default"></select>
+        </div>
+        <div class="field">
+            <label asp-for="NextId"></label>
+            <select asp-for="NextId" asp-items="ViewBag.Adventures" class="ui selection dropdown create-default"></select>
+        </div>
+    }
+    <button type="submit" class="ui green button"><i class="@ViewData["Icon"] icon"></i>@ViewData["Button"] </button>
+    @if (Model != null && Model.Id.HasValue)
+    {
+        <a asp-action="Details" asp-route-id="@Model.Id" class="ui blue button"><i class="map icon"></i>Adventure Details</a>
+    }
+</form>
+
+<p><a asp-action="Index">Back to List</a></p>

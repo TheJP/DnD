@@ -13,7 +13,8 @@ namespace DnD.Models
 
         public string Name { get; set; }
 
-        [MaxLength(5000)]
+        public const int DescriptionLength = 5000;
+        [MaxLength(DescriptionLength)]
         public string Description { get; set; }
 
         [DataType(DataType.Date)]

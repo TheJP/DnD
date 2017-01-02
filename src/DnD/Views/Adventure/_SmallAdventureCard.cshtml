@@ -1,0 +1,16 @@
+﻿@model DnD.Models.Adventure
+
+<div class="ui card">
+    <div class="content">
+        <div class="header">
+            <a asp-action="Details" asp-controller="Adventure" asp-route-id="@Model.Id">@Html.DisplayFor(model => model.Name) (@Html.DisplayFor(model => model.Date))</a>
+        </div>
+        <div class="meta">@Html.DisplayFor(model => model.DungeonMaster.DisplayName)</div>
+    </div>
+    <div class="extra content">
+        <div class="ui two buttons">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="ui green button"><i class="write icon"></i> Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="ui red button"><i class="delete icon"></i> Delete</a>
+        </div>
+    </div>
+</div>

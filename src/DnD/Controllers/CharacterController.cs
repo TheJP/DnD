@@ -40,14 +40,14 @@ namespace DnD.Controllers
             return character;
         }
 
-        // GET: Character
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = context.Characters.Include(c => c.Owner).Include(c => c.Race);
+            var applicationDbContext = context.Characters
+                .Include(c => c.Owner)
+                .Include(c => c.Race);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Character/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) { return NotFound(); }
@@ -62,7 +62,6 @@ namespace DnD.Controllers
             return View(character);
         }
 
-        // GET: Character/Create
         public IActionResult Create()
         {
             ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name");
@@ -82,7 +81,6 @@ namespace DnD.Controllers
             return View(viewModel);
         }
 
-        // GET: Character/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) { return NotFound(); }
@@ -127,7 +125,6 @@ namespace DnD.Controllers
             return View(viewModel);
         }
 
-        // GET: Character/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) { return NotFound(); }
@@ -140,7 +137,6 @@ namespace DnD.Controllers
             return View(character);
         }
 
-        // POST: Character/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

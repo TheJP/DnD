@@ -24,6 +24,10 @@
         }, 10);
     }
 
+    function dropDownReset() {
+        $(this).parent().siblings('.dropdown').dropdown('clear');
+    }
+
     $(document).ready(function () {
         $('form.form.summary')
             .each(showSummary)
@@ -37,6 +41,9 @@
         $('form.form .checkbox').checkbox();
         $('.dropdown.create-default').dropdown();
         $('.dropdown.allow-add').dropdown({ allowAdditions: true });
+
+        //Woraround until https://github.com/Semantic-Org/Semantic-UI/issues/2072 is resolved
+        $('.dropdown-reset').click(dropDownReset);
     });
 
 })();

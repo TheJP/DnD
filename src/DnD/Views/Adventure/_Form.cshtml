@@ -28,16 +28,22 @@
             <span asp-validation-for="Description"></span>
         </div>
     </div>
-    @*Only show those two fields if there are other adventures*@
-    @if (ViewBag.Adventures.GetEnumerator().MoveNext())
+    @* Only show those two fields if there are other adventures *@
+    @if (ViewBag.Previous.GetEnumerator().MoveNext())
     {
         <div class="field">
-            <label asp-for="PreviousId"></label>
-            <select asp-for="PreviousId" asp-items="ViewBag.Adventures" class="ui selection dropdown create-default"></select>
+            <label>
+                @Html.DisplayNameFor(a => a.PreviousId)
+                <a class="ui tiny red label dropdown-reset" data-tooltip="clear drop down"><i class="remove icon"></i>clear</a>
+            </label>
+            <select asp-for="PreviousId" asp-items="ViewBag.Previous" class="ui selection dropdown create-default"></select>
         </div>
         <div class="field">
-            <label asp-for="NextId"></label>
-            <select asp-for="NextId" asp-items="ViewBag.Adventures" class="ui selection dropdown create-default"></select>
+            <label>
+                @Html.DisplayNameFor(a => a.NextId)
+                <a class="ui tiny red label dropdown-reset" data-tooltip="clear drop down"><i class="remove icon"></i>clear</a>
+            </label>
+            <select asp-for="NextId" asp-items="ViewBag.Next" class="ui selection dropdown create-default"></select>
         </div>
     }
     <button type="submit" class="ui green button"><i class="@ViewData["Icon"] icon"></i>@ViewData["Button"] </button>

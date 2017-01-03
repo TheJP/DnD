@@ -23,6 +23,7 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <a asp-area="" asp-controller="Character" asp-action="Index" class="@Html.IsActiveAction(controllers: "Character") item"><i class="@Html.CharacterIcon() icon"></i> Characters</a>
+            <a asp-area="" asp-controller="Adventure" asp-action="Index" class="@Html.IsActiveAction(controllers: "Adventure") item"><i class="map icon"></i> Adventures</a>
         }
         @await Html.PartialAsync("_LoginPartial")
     </div>

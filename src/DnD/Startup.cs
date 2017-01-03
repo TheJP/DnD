@@ -50,6 +50,7 @@ namespace DnD
             services.AddMvc();
 
             // Add application services.
+            services.AddScoped<AdventureManager, AdventureManager>();
             services.AddScoped<CharacterManager, CharacterManager>();
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();

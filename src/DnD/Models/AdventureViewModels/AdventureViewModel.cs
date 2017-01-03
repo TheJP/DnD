@@ -16,13 +16,12 @@ namespace DnD.Models.AdventureViewModels
         [StringLength(255)]
         public string Name { get; set; }
 
-        [Required]
         [StringLength(Adventure.DescriptionLength)]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
+        [DataType(DataType.Text)]
+        public DateTime? Date { get; set; }
 
         [Display(Name = "Previous Adventure")]
         public int? PreviousId { get; set; }

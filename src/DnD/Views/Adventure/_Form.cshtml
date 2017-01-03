@@ -41,14 +41,18 @@
                 @Html.DisplayNameFor(a => a.PreviousId)
                 <a class="ui tiny red label dropdown-reset" data-tooltip="clear drop down"><i class="remove icon"></i>clear</a>
             </label>
-            <select asp-for="PreviousId" asp-items="ViewBag.Previous" class="ui selection dropdown create-default"></select>
+            <select asp-for="PreviousId" asp-items="ViewBag.Previous" class="ui selection dropdown create-default">
+                <option value=""></option>
+            </select>
         </div>
         <div class="field">
             <label>
                 @Html.DisplayNameFor(a => a.NextId)
                 <a class="ui tiny red label dropdown-reset" data-tooltip="clear drop down"><i class="remove icon"></i>clear</a>
             </label>
-            <select asp-for="NextId" asp-items="ViewBag.Next" class="ui selection dropdown create-default"></select>
+            <select asp-for="NextId" asp-items="ViewBag.Next" class="ui selection dropdown create-default">
+                <option value=""></option>
+            </select>
         </div>
     }
     <button type="submit" class="ui green button"><i class="@ViewData["Icon"] icon"></i>@ViewData["Button"] </button>

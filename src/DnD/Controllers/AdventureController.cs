@@ -42,10 +42,7 @@ namespace DnD.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = context.Adventures
-                .Include(a => a.DungeonMaster)
-                .Include(a => a.Previous)
-                .Include(a => a.Next);
+            var applicationDbContext = context.Adventures.Include(a => a.DungeonMaster);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -62,18 +59,20 @@ namespace DnD.Controllers
             return View(adventure);
         }
 
-        private void Create(string dungeonMaster, int? previous = null, int? next = null)
+        private void PrepareSelectLists(string dungeonMasterId, int? previousId = null, int? nextId = null)
         {
-            ViewData["DungeonMasters"] = new SelectList(context.Users.OrderBy(u => u.DisplayName), "Id", "DisplayName", dungeonMaster);
-            var adventures = context.Adventures.OrderByDescending(a => a.Date);
-            ViewData["Previous"] = new SelectList(adventures, "Id", "Name", previous);
-            ViewData["Next"] = new SelectList(adventures, "Id", "Name", next);
+            ViewData["DungeonMasters"] = new SelectList(context.Users.OrderBy(u => u.DisplayName), "Id", "DisplayName", dungeonMasterId);
+            var adventures = context.Adventures
+                .OrderByDescending(a => a.Date)
+                .Select(a => new { Id = a.Id, Name = $"{a.Name} ({a.Date:d})" });
+            ViewData["Previous"] = new SelectList(adventures, "Id", "Name", previousId);
+            ViewData["Next"] = new SelectList(adventures, "Id", "Name", nextId);
         }
 
         public async Task<IActionResult> Create()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            Create(user.Id);
+            PrepareSelectLists(user.Id);
             return View();
         }
 
@@ -90,25 +89,27 @@ namespace DnD.Controllers
                 await manager.CreateAsync(newAdventure);
                 return RedirectToAction("Details", new { Id = newAdventure.Id });
             }
-            Create(viewModel.DungeonMasterId, viewModel.PreviousId, viewModel.NextId);
+            PrepareSelectLists(viewModel.DungeonMasterId, viewModel.PreviousId, viewModel.NextId);
             return View(viewModel);
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) { return NotFound(); }
             var adventure = await context.Adventures.SingleOrDefaultAsync(m => m.Id == id);
-            if (adventure == null)
+            if (adventure == null) { return NotFound(); }
+
+            PrepareSelectLists(adventure.DungeonMasterId, adventure.PreviousId, adventure.NextId);
+            return View(new AdventureViewModel()
             {
-                return NotFound();
-            }
-            ViewData["DungeonMasterId"] = new SelectList(context.Users, "Id", "Id", adventure.DungeonMasterId);
-            ViewData["NextId"] = new SelectList(context.Adventures, "Id", "DungeonMasterId", adventure.NextId);
-            return View(adventure);
+                Id = adventure.Id,
+                Name = adventure.Name,
+                Date = adventure.Date,
+                DungeonMasterId = adventure.DungeonMasterId,
+                Description = adventure.Description,
+                PreviousId = adventure.PreviousId,
+                NextId = adventure.NextId
+            });
         }
 
         // POST: Adventure/Edit/5
@@ -116,50 +117,35 @@ namespace DnD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Description,DungeonMasterId,Name,NextId,PreviousId")] Adventure adventure)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Description,DungeonMasterId,Name,NextId,PreviousId")] AdventureViewModel viewModel)
         {
-            if (id != adventure.Id)
-            {
-                return NotFound();
-            }
+            if (!viewModel.Id.HasValue || id != viewModel.Id.Value) { return NotFound(); }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    context.Update(adventure);
-                    await context.SaveChangesAsync();
+                    await manager.UpdateAsync(AdventureFromViewModel(viewModel, await context.Adventures.SingleAsync(a => a.Id == id)));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AdventureExists(adventure.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!AdventureExists(id)) { return NotFound(); }
+                    else { throw; }
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { Id = id });
             }
-            ViewData["DungeonMasterId"] = new SelectList(context.Users, "Id", "Id", adventure.DungeonMasterId);
-            ViewData["NextId"] = new SelectList(context.Adventures, "Id", "DungeonMasterId", adventure.NextId);
-            return View(adventure);
+
+            PrepareSelectLists(viewModel.DungeonMasterId, viewModel.PreviousId, viewModel.NextId);
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var adventure = await context.Adventures.SingleOrDefaultAsync(m => m.Id == id);
-            if (adventure == null)
-            {
-                return NotFound();
-            }
+            if (id == null) { return NotFound(); }
+            var adventure = await context.Adventures
+                .Include(a => a.DungeonMaster)
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (adventure == null) { return NotFound(); }
 
             return View(adventure);
         }

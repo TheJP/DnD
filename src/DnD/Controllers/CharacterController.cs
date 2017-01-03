@@ -119,8 +119,9 @@ namespace DnD.Controllers
                     if (!CharacterExists(id)) { return NotFound(); }
                     else { throw; }
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { Id = id });
             }
+
             ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", viewModel.RaceId);
             return View(viewModel);
         }

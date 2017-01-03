@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "semantic": "2.2.2",
+	"semantic-ui-calendar": "0.0.6",
     "jquery": "3.1.0",
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.6",

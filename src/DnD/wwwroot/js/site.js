@@ -44,6 +44,8 @@
 
         //Woraround until https://github.com/Semantic-Org/Semantic-UI/issues/2072 is resolved
         $('.dropdown-reset').click(dropDownReset);
+
+        $('.calendar.create-default').calendar({ type: 'date' });
     });
 
 })();

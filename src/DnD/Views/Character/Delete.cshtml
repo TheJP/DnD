@@ -1,14 +1,13 @@
 @model DnD.Models.Character
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Character";
 }
 
 <h3>Are you sure you want to delete this character?</h3>
-<h4 class="ui dividing header">Character</h4>
 
 @await Html.PartialAsync("_CharacterCard", Model, new ViewDataDictionary(ViewData) { ["HideActions"] = false })
-    
+
 <form asp-action="Delete">
     <button type="submit" class="ui red button"><i class="delete icon"></i>Delete</button>
     <a asp-action="Index">Back to List</a>

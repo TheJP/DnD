@@ -36,14 +36,34 @@
     </div>
     @if (!string.IsNullOrWhiteSpace(Model.Description))
     {
-    <div class="ui segment">
-        <h2>Description</h2>
-        @Html.DisplayFor(model => model.Description)
-    </div>
+        <div class="ui segment">
+            <h3>Description</h3>
+            @Html.DisplayFor(model => model.Description)
+        </div>
     }
     <div class="ui segment">
         <a asp-action="Edit" asp-route-id="@Model.Id" class="ui green button"><i class="write icon"></i>Edit</a>
         <a asp-action="Delete" asp-route-id="@Model.Id" class="ui red button"><i class="delete icon"></i>Delete</a>
+    </div>
+</section>
+
+<section class="ui raised segments">
+    <div class="ui segment">
+        <h2>Adventurers</h2>
+        @if (Model.Adventurers == null || Model.Adventurers.Count <= 0)
+        {
+            <p>There are no adventurous characters here yet.. go search some!</p>
+        }
+        else
+        {
+            foreach (var adventurer in Model.Adventurers)
+            {
+                @await Html.PartialAsync("_CharacterCard", adventurer)
+            }
+        }
+    </div>
+    <div class="ui segment">
+        <a class="ui green labeled icon button"><i class="@Html.CharacterIcon() icon"></i> Add Adventurer</a>
     </div>
 </section>
 

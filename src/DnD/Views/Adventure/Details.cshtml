@@ -1,42 +1,50 @@
 @model DnD.Models.Adventure
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Adventure Details";
 }
 
-<h2>Details</h2>
+<section class="ui raised segments">
+    <div class="ui segment">
+        <span class="ui green ribbon label"><i class="map icon"></i> Adventure Info</span>
+        <p></p>
+        <div class="ui large horizontal divided list">
+            @if (Model.Previous != null)
+            {
+                <div class="item">
+                    <a asp-action="Details" asp-route-id="@Model.Previous.Id" class="ui green labeled icon button"><i class="left chevron icon"></i> @Html.DisplayFor(model => model.Previous.Name) (@Html.DisplayFor(model => model.Previous.Date))</a>
+                </div>
+            }
+            <div class="item">
+                <div class="content" data-tooltip="Name of this adventure"><h2>@Html.DisplayFor(model => model.Name)</h2></div>
+            </div>
+            <div class="item">
+                <div class="header">@Html.DisplayNameFor(model => model.DungeonMaster)</div>
+                <div class="content">@Html.DisplayFor(model => model.DungeonMaster.DisplayName)</div>
+            </div>
+            <div class="item">
+                <div class="header">@Html.DisplayNameFor(model => model.Date)</div>
+                <div class="content">@Html.DisplayFor(model => model.Date)</div>
+            </div>
+            @if (Model.Next != null)
+            {
+                <div class="item">
+                    <a asp-action="Details" asp-route-id="@Model.Next.Id" class="ui green labeled icon button"><i class="right chevron icon"></i> @Html.DisplayFor(model => model.Next.Name) (@Html.DisplayFor(model => model.Next.Date))</a>
+                </div>
+            }
+        </div>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Model.Description))
+    {
+    <div class="ui segment">
+        <h2>Description</h2>
+        @Html.DisplayFor(model => model.Description)
+    </div>
+    }
+    <div class="ui segment">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="ui green button"><i class="write icon"></i>Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="ui red button"><i class="delete icon"></i>Delete</a>
+    </div>
+</section>
 
-<div>
-    <h4>Adventure</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PreviousId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PreviousId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<div><a asp-action="Index">Back to List</a></div>

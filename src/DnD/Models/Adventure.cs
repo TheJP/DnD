@@ -28,6 +28,7 @@ namespace DnD.Models
 
         public string DungeonMasterId { get; set; }
         [Required]
+        [Display(Name = "Dungeon Master")]
         public ApplicationUser DungeonMaster { get; set; }
 
         [InverseProperty("Adventure")]

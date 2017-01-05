@@ -25,6 +25,7 @@ namespace DnD.Services
             try
             {
                 context.Adventures.Add(adventure);
+                //TODO: Handle Next and Previous correctly
                 await context.SaveChangesAsync();
             }
             catch (Exception e) { logger.LogError("Exception while creating adventure: {0}", e.Message); }
@@ -35,6 +36,7 @@ namespace DnD.Services
             try
             {
                 context.Update(adventure);
+                //TODO: Handle Next and Previous correctly
                 await context.SaveChangesAsync();
             }
             catch (Exception e) { logger.LogError("Exception while updating adventure: {0}", e.Message); }

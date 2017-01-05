@@ -42,7 +42,9 @@ namespace DnD.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = context.Adventures.Include(a => a.DungeonMaster);
+            var applicationDbContext = context.Adventures
+                .Include(a => a.DungeonMaster)
+                .OrderByDescending(a => a.Date);
             return View(await applicationDbContext.ToListAsync());
         }
 

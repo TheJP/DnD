@@ -24,7 +24,7 @@
     </div>
     <div class="field">
         <label asp-for="DungeonMasterId"></label>
-        <select asp-for="DungeonMasterId" asp-items="ViewBag.DungeonMasters" class="ui selection dropdown create-default"></select>
+        <select asp-for="DungeonMasterId" asp-items="ViewBag.DungeonMasters" class="ui selection search dropdown create-default"></select>
     </div>
     <div class="field">
         <label asp-for="Description"></label>
@@ -41,7 +41,7 @@
                 @Html.DisplayNameFor(a => a.PreviousId)
                 <a class="ui tiny red label dropdown-reset" data-tooltip="clear drop down"><i class="remove icon"></i>clear</a>
             </label>
-            <select asp-for="PreviousId" asp-items="ViewBag.Previous" class="ui selection dropdown create-default">
+            <select asp-for="PreviousId" asp-items="ViewBag.Previous" class="ui selection search dropdown create-default">
                 <option value=""></option>
             </select>
         </div>
@@ -50,7 +50,7 @@
                 @Html.DisplayNameFor(a => a.NextId)
                 <a class="ui tiny red label dropdown-reset" data-tooltip="clear drop down"><i class="remove icon"></i>clear</a>
             </label>
-            <select asp-for="NextId" asp-items="ViewBag.Next" class="ui selection dropdown create-default">
+            <select asp-for="NextId" asp-items="ViewBag.Next" class="ui selection search dropdown create-default">
                 <option value=""></option>
             </select>
         </div>

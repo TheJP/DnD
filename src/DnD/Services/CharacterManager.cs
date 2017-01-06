@@ -25,7 +25,7 @@ namespace DnD.Services
         {
             if(
                 //No values selected or
-                character.InitialLife == 0 || character.InitialMana == 0 ||
+                character.InitialLife == 0 ||
                 //Chosen race is dragon
                 (await context.Races.SingleAsync(r => r.Id == character.RaceId)).IsDragon
             ){

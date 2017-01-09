@@ -44,6 +44,9 @@
             <select asp-for="PreviousId" asp-items="ViewBag.Previous" class="ui selection search dropdown create-default">
                 <option value=""></option>
             </select>
+            <div class="ui pointing red basic label error-label">
+                <span asp-validation-for="PreviousId"></span>
+            </div>
         </div>
         <div class="field">
             <label>
@@ -53,6 +56,9 @@
             <select asp-for="NextId" asp-items="ViewBag.Next" class="ui selection search dropdown create-default">
                 <option value=""></option>
             </select>
+            <div class="ui pointing red basic label error-label">
+                <span asp-validation-for="NextId"></span>
+            </div>
         </div>
     }
     <button type="submit" class="ui green button"><i class="@ViewData["Icon"] icon"></i>@ViewData["Button"] </button>

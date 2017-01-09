@@ -49,6 +49,7 @@
 
 <section class="ui raised segments">
     <div class="ui segment">
+        <span class="ui green ribbon label"><i class="@Html.CharacterIcon() icon"></i> Adventurers for "@Html.DisplayFor(model => model.Name)"</span>
         <h2>Adventurers</h2>
         @if (Model.Adventurers == null || Model.Adventurers.Count <= 0)
         {
@@ -63,7 +64,8 @@
         }
     </div>
     <div class="ui segment">
-        <a class="ui green labeled icon button"><i class="@Html.CharacterIcon() icon"></i> Add Adventurer</a>
+        <h3>Add Adventurers</h3>
+        @await Html.PartialAsync("_AddAdventurersForm", new DnD.Models.AdventureViewModels.AddAdventurersViewModel() { AdventureId = Model.Id }, new ViewDataDictionary(ViewData) { ["HideId"] = true })
     </div>
 </section>
 

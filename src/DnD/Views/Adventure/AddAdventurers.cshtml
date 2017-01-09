@@ -1,0 +1,12 @@
+﻿@model DnD.Models.AdventureViewModels.AddAdventurersViewModel
+
+@{
+    ViewData["Title"] = "Add Adventurers";
+}
+
+@await Html.PartialAsync("_AddAdventurersForm", Model)
+<a asp-action="Details" asp-route-id="@Model.AdventureId">Back to Adventure</a>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

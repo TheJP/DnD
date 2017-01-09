@@ -44,9 +44,9 @@ namespace DnD.Models.CharacterViewModels
                 {
                     yield return new ValidationResult($"Initial Life must be greater than 0.", new[] { "InitialLife" });
                 }
-                else if (InitialMana < 1)
+                else if (InitialMana < 0)
                 {
-                    yield return new ValidationResult($"Initial Mana must be greater than 0.", new[] { "InitialMana" });
+                    yield return new ValidationResult($"Initial Mana must be greater than or equal to 0.", new[] { "InitialMana" });
                 }
             }
         }

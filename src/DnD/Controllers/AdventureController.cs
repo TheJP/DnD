@@ -40,6 +40,21 @@ namespace DnD.Controllers
             return adventure;
         }
 
+        private void PrepareSelectLists(string dungeonMasterId, int? previousId = null, int? nextId = null)
+        {
+            ViewData["DungeonMasters"] = new SelectList(context.Users.OrderBy(u => u.DisplayName), "Id", "DisplayName", dungeonMasterId);
+            var adventures = context.Adventures
+                .OrderByDescending(a => a.Date)
+                .Select(a => new { Id = a.Id, Name = $"{a.Name} ({a.Date:d})" });
+            ViewData["Previous"] = new SelectList(adventures, "Id", "Name", previousId);
+            ViewData["Next"] = new SelectList(adventures, "Id", "Name", nextId);
+        }
+
+        private void PrepareAdventurersSelect(IEnumerable<int> selected = null)
+        {
+            ViewData["Characters"] = new MultiSelectList(context.Characters.OrderBy(c => c.Name), "Id", "Name", selected);
+        }
+
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = context.Adventures
@@ -57,18 +72,9 @@ namespace DnD.Controllers
                 .Include(a => a.Next)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (adventure == null) { return NotFound(); }
+            PrepareAdventurersSelect();
 
             return View(adventure);
-        }
-
-        private void PrepareSelectLists(string dungeonMasterId, int? previousId = null, int? nextId = null)
-        {
-            ViewData["DungeonMasters"] = new SelectList(context.Users.OrderBy(u => u.DisplayName), "Id", "DisplayName", dungeonMasterId);
-            var adventures = context.Adventures
-                .OrderByDescending(a => a.Date)
-                .Select(a => new { Id = a.Id, Name = $"{a.Name} ({a.Date:d})" });
-            ViewData["Previous"] = new SelectList(adventures, "Id", "Name", previousId);
-            ViewData["Next"] = new SelectList(adventures, "Id", "Name", nextId);
         }
 
         public async Task<IActionResult> Create()
@@ -160,6 +166,16 @@ namespace DnD.Controllers
             context.Adventures.Remove(adventure);
             await context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult AddAdventurers(AddAdventurersViewModel viewModel)
+        {
+            //return RedirectToAction("Details", new { Id = id });
+            PrepareAdventurersSelect(viewModel.Adventurers);
+            ViewData["Adventures"] = new SelectList(context.Adventures.OrderByDescending(a => a.Date), "Id", "Name", viewModel.AdventureId);
+            return View(viewModel);
         }
 
         private bool AdventureExists(int id)

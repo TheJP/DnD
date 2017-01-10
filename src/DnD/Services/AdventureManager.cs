@@ -41,5 +41,20 @@ namespace DnD.Services
             }
             catch (Exception e) { logger.LogError("Exception while updating adventure: {0}", e.Message); }
         }
+
+        public async Task AddAdventurers(int adventure, IEnumerable<int> adventurers)
+        {
+            try
+            {
+                var participations = adventurers.Select(adventurerId => new AdventureParticipation()
+                {
+                    AdventureId = adventure,
+                    AdventurerId = adventurerId
+                });
+                context.AdventureParticipations.AddRange(participations);
+                await context.SaveChangesAsync();
+            }
+            catch (Exception e) { logger.LogError("Exception while adding adventurers: {0}", e.Message); }
+        }
     }
 }

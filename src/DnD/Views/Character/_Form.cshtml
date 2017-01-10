@@ -31,14 +31,14 @@
         <label asp-for="RaceId">Race (<a asp-action="Index" asp-controller="Info" @*Href is set by tag helpers*@ target="_blank"><i class="external icon"></i>Info</a>)</label>
         <select asp-for="RaceId" asp-items="ViewBag.RaceItems" class="ui selection dropdown create-default" id="race"></select>
     </div>
-    <div class="field initial">
+    <div class="field initial" data-tooltip="Initial Mana + Initial Life has to be equal to 15">
         <label asp-for="InitialLife"></label>
         <input asp-for="InitialLife" id="initial-life" />
         <div class="ui pointing red basic label error-label">
             <span asp-validation-for="InitialLife"></span>
         </div>
     </div>
-    <div class="field initial">
+    <div class="field initial" data-tooltip="Initial Mana + Initial Life has to be equal to 15">
         <label asp-for="InitialMana"></label>
         <input asp-for="InitialMana" id="initial-mana" />
         <div class="ui pointing red basic label error-label">

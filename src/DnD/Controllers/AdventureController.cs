@@ -168,11 +168,14 @@ namespace DnD.Controllers
             return RedirectToAction("Index");
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddAdventurers(AddAdventurersViewModel viewModel)
         {
-            //return RedirectToAction("Details", new { Id = id });
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Details", new { Id = viewModel.AdventureId });
+            }
             PrepareAdventurersSelect(viewModel.Adventurers);
             ViewData["Adventures"] = new SelectList(context.Adventures.OrderByDescending(a => a.Date), "Id", "Name", viewModel.AdventureId);
             return View(viewModel);

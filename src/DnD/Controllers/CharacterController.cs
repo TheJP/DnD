@@ -74,8 +74,9 @@ namespace DnD.Controllers
         {
             if (ModelState.IsValid)
             {
-                await manager.CreateAsync(await CharacterFromViewModel(viewModel));
-                return RedirectToAction("Index");
+                var newCharacter = await CharacterFromViewModel(viewModel);
+                await manager.CreateAsync(newCharacter);
+                return RedirectToAction("Details", new { Id = newCharacter.Id });
             }
             ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", viewModel.RaceId);
             return View(viewModel);

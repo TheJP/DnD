@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DnD.Data;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -38,16 +39,22 @@ namespace DnD.Models.CharacterViewModels
             {
                 if (InitialLife + InitialMana != Character.InitialLifePlusMana)
                 {
-                    yield return new ValidationResult($"Initial Mana + Initial Life must be equal to {Character.InitialLifePlusMana}.", new[] { "InitialLife", "InitialMana" });
+                    yield return new ValidationResult($"Initial Mana + Initial Life has to be equal to {Character.InitialLifePlusMana}.", new[] { "InitialLife", "InitialMana" });
                 }
-                else if (InitialLife < 1)
+                if (InitialLife < 1)
                 {
-                    yield return new ValidationResult($"Initial Life must be greater than 0.", new[] { "InitialLife" });
+                    yield return new ValidationResult($"Initial Life has to be greater than 0.", new[] { "InitialLife" });
                 }
-                else if (InitialMana < 0)
+                if (InitialMana < 0)
                 {
-                    yield return new ValidationResult($"Initial Mana must be greater than or equal to 0.", new[] { "InitialMana" });
+                    yield return new ValidationResult($"Initial Mana has to be greater than or equal to 0.", new[] { "InitialMana" });
                 }
+            }
+
+            var context = (ApplicationDbContext)validationContext.GetService(typeof(ApplicationDbContext));
+            if(!context.Races.Any(r => r.Id == RaceId))
+            {
+                yield return new ValidationResult($"An unkown race was selected.", new[] { "RaceId" });
             }
         }
     }

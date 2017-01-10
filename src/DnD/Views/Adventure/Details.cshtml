@@ -57,10 +57,12 @@
         }
         else
         {
-            foreach (var adventurer in Model.Adventurers)
+            <div class="ui cards">
+            @foreach (var adventurer in Model.Adventurers)
             {
-                @await Html.PartialAsync("_CharacterCard", adventurer)
+                @await Html.PartialAsync("../Character/_CharacterCard", adventurer.Adventurer)
             }
+            </div>
         }
     </div>
     <div class="ui segment">

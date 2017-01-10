@@ -42,19 +42,19 @@ namespace DnD.Services
             catch (Exception e) { logger.LogError("Exception while updating adventure: {0}", e.Message); }
         }
 
-        public async Task AddAdventurers(int adventure, IEnumerable<int> adventurers)
+        public async Task AddAdventurers(int adventureId, IEnumerable<int> adventurers)
         {
             try
             {
                 var participations = adventurers.Select(adventurerId => new AdventureParticipation()
                 {
-                    AdventureId = adventure,
+                    AdventureId = adventureId,
                     AdventurerId = adventurerId
                 });
                 context.AdventureParticipations.AddRange(participations);
                 await context.SaveChangesAsync();
             }
-            catch (Exception e) { logger.LogError("Exception while adding adventurers: {0}", e.Message); }
+            catch (Exception e) { logger.LogError("Exception while adding adventurers to adventure: {0}", e.Message); }
         }
     }
 }

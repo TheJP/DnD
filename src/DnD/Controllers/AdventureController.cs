@@ -70,6 +70,9 @@ namespace DnD.Controllers
                 .Include(a => a.DungeonMaster)
                 .Include(a => a.Previous)
                 .Include(a => a.Next)
+                .Include(a => a.Adventurers)
+                    .ThenInclude(p => p.Adventurer)
+                    .ThenInclude(c => c.Race)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (adventure == null) { return NotFound(); }
             PrepareAdventurersSelect();
@@ -170,10 +173,11 @@ namespace DnD.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddAdventurers(AddAdventurersViewModel viewModel)
+        public async Task<IActionResult> AddAdventurers(AddAdventurersViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                await manager.AddAdventurers(viewModel.AdventureId, viewModel.Adventurers);
                 return RedirectToAction("Details", new { Id = viewModel.AdventureId });
             }
             PrepareAdventurersSelect(viewModel.Adventurers);

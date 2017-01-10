@@ -1,7 +1,10 @@
 ﻿@model DnD.Models.AdventureViewModels.AddAdventurersViewModel
 
 <form asp-action="AddAdventurers" class="ui form summary">
-    @await Html.PartialAsync("_FormErrorSummary")
+    @*
+        TODO: Deactivated until NullReferenceException bug is fixed
+        @await Html.PartialAsync("_FormErrorSummary")
+    *@
     @if (ViewData.ContainsKey("HideId"))
     {
         <input asp-for="AdventureId" type="hidden" />

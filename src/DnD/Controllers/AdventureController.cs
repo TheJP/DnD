@@ -50,9 +50,12 @@ namespace DnD.Controllers
             ViewData["Next"] = new SelectList(adventures, "Id", "Name", nextId);
         }
 
-        private void PrepareAdventurersSelect(IEnumerable<int> selected = null)
+        private void PrepareAdventurersSelect(int adventureId, IEnumerable<int> selected = null)
         {
-            ViewData["Characters"] = new MultiSelectList(context.Characters.OrderBy(c => c.Name), "Id", "Name", selected);
+            var characters = context.Characters
+                .Where(c => !c.Adventures.Any(ap => ap.AdventureId == adventureId))
+                .OrderBy(c => c.Name);
+            ViewData["Characters"] = new MultiSelectList(characters, "Id", "Name", selected);
         }
 
         public async Task<IActionResult> Index()
@@ -75,7 +78,7 @@ namespace DnD.Controllers
                     .ThenInclude(c => c.Race)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (adventure == null) { return NotFound(); }
-            PrepareAdventurersSelect();
+            PrepareAdventurersSelect(id.Value);
 
             return View(adventure);
         }
@@ -180,7 +183,7 @@ namespace DnD.Controllers
                 await manager.AddAdventurers(viewModel.AdventureId, viewModel.Adventurers);
                 return RedirectToAction("Details", new { Id = viewModel.AdventureId });
             }
-            PrepareAdventurersSelect(viewModel.Adventurers);
+            PrepareAdventurersSelect(viewModel.AdventureId, viewModel.Adventurers);
             ViewData["Adventures"] = new SelectList(context.Adventures.OrderByDescending(a => a.Date), "Id", "Name", viewModel.AdventureId);
             return View(viewModel);
         }

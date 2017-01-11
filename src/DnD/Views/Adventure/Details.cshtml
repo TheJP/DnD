@@ -60,7 +60,7 @@
             <div class="ui cards">
             @foreach (var adventurer in Model.Adventurers)
             {
-                @await Html.PartialAsync("../Character/_CharacterCard", adventurer.Adventurer)
+                @await Html.PartialAsync("_AdventurerCard", adventurer)
             }
             </div>
         }

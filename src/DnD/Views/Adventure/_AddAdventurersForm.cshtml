@@ -13,7 +13,7 @@
     {
         <div class="field">
             <label asp-for="AdventureId"></label>
-            <input asp-for="AdventureId" />
+            <select asp-for="AdventureId" asp-items="ViewBag.Adventures" class="ui selection search dropdown create-default"></select>
             <div class="ui pointing red basic label error-label">
                 <span asp-validation-for="AdventureId"></span>
             </div>

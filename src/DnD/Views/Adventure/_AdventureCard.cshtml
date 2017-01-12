@@ -1,9 +1,10 @@
-﻿@model DnD.Models.Adventure
+﻿@model Adventure
 
 <div class="ui card">
     <div class="content">
+        <div class="right floated meta">@Html.DisplayFor(model => model.Date)</div>
         <div class="header">
-            <a asp-action="Details" asp-controller="Adventure" asp-route-id="@Model.Id">@Html.DisplayFor(model => model.Name) (@Html.DisplayFor(model => model.Date))</a>
+            <a asp-action="Details" asp-controller="Adventure" asp-route-id="@Model.Id">@Html.DisplayFor(model => model.Name)</a>
         </div>
         <div class="meta">@Html.DisplayFor(model => model.DungeonMaster.DisplayName)</div>
     </div>

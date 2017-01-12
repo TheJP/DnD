@@ -1,20 +1,29 @@
-﻿@model DnD.Models.AdventureParticipation
+﻿@model AdventureParticipation
 
 <div class="ui card">
+    @await Html.PartialAsync("_CharacterCardHeader", Model.Adventurer)
     <div class="content">
-        <div class="header">
-            <a asp-action="Details" asp-controller="Character" asp-route-id="@Model.Adventurer.Id">@Html.DisplayFor(model => model.Adventurer.Name) (@Html.DisplayFor(model => model.Adventurer.Race.Name))</a>
-            <span data-tooltip="@Html.DisplayFor(model => model.Adventurer.Gender)"><i class="@Html.GenderIcon(Model.Adventurer.Gender) icon"></i></span>
-        </div>
-        <div class="meta">@Html.DisplayFor(model => model.Adventurer.Owner.DisplayName)</div>
-    </div>
-    @if (!ViewData.ContainsKey("HideActions"))
-    {
-        <div class="extra content">
-            <div class="ui two buttons">
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="ui green button"><i class="write icon"></i> Edit</a>
-                <a asp-action="Delete" asp-route-id="@Model.Id" class="ui red button"><i class="delete icon"></i> Delete</a>
+        <form class="ui form">
+            <button class="right floated ui yellow button"><i class="cubes icon"></i> Add Gold</button>
+            <div class="fields">
+                <div class="field" data-tooltip="How much Gold this Adventurer earned or lost">
+                    <input placeholder="Amount" />
+                </div>
+                <div class="field" data-tooltip="Optional Description">
+                    <input placeholder="Description" />
+                </div>
             </div>
-        </div>
-    }
+        </form>
+        <form class="ui form">
+            <button class="right floated ui purple button"><i class="lab icon"></i> Add Experience</button>
+            <div class="fields">
+                <div class="field" data-tooltip="How much Experience this Adventurer gained">
+                    <input />
+                </div>
+                <div class="field" data-tooltip="Optional Description">
+                    <input />
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

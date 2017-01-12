@@ -57,7 +57,7 @@
         }
         else
         {
-            <div class="ui cards">
+            <div class="ui two stackable cards">
             @foreach (var adventurer in Model.Adventurers)
             {
                 @await Html.PartialAsync("_AdventurerCard", adventurer)

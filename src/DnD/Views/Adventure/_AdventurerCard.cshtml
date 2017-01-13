@@ -3,25 +3,45 @@
 <div class="ui card">
     @await Html.PartialAsync("_CharacterCardHeader", Model.Adventurer)
     <div class="content">
-        <form class="ui form">
-            <button class="right floated ui yellow button"><i class="cubes icon"></i> Add Gold</button>
+        <form class="ui form" asp-controller="Character" asp-action="AddGold">
+            <button class="right floated ui yellow icon button" data-tooltip="Add Gold"><i class="cubes icon"></i></button>
             <div class="fields">
                 <div class="field" data-tooltip="How much Gold this Adventurer earned or lost">
-                    <input placeholder="Amount" />
+                    <div class="ui corner labeled input">
+                        <input placeholder="Amount" />
+                        <div class="ui yellow corner label">
+                            <i class="cubes icon"></i>
+                        </div>
+                    </div>
                 </div>
                 <div class="field" data-tooltip="Optional Description">
-                    <input placeholder="Description" />
+                    <div class="ui corner labeled input">
+                        <input placeholder="Description" />
+                        <div class="ui yellow corner label">
+                            <i class="write icon"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
-        <form class="ui form">
-            <button class="right floated ui purple button"><i class="lab icon"></i> Add Experience</button>
+        <form class="ui form" asp-controller="Character" asp-action="AddExperience">
+            <button class="right floated ui purple icon button" data-tooltip="Add Experience"><i class="lab icon"></i></button>
             <div class="fields">
                 <div class="field" data-tooltip="How much Experience this Adventurer gained">
-                    <input />
+                    <div class="ui corner labeled input">
+                        <input placeholder="Amount" />
+                        <div class="ui purple corner label">
+                            <i class="lab icon"></i>
+                        </div>
+                    </div>
                 </div>
                 <div class="field" data-tooltip="Optional Description">
-                    <input />
+                    <div class="ui corner labeled input">
+                        <input placeholder="Description" />
+                        <div class="ui purple corner label">
+                            <i class="write icon"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>

@@ -3,13 +3,8 @@
 <div class="ui card">
     @await Html.PartialAsync("_CharacterCardHeader", Model.Adventurer)
     <div class="content">
-        Id: @Model.Id<br />
-        Adventure: @Model.AdventureId<br />
-        Adventurer: @Model.AdventurerId
-    </div>
-    <div class="content">
         <form class="ui form" asp-controller="Character" asp-action="AddGold">
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
             <input type="hidden" name="From" value="Adventure" />
             <button class="right floated ui yellow icon button" data-tooltip="Add Gold"><i class="cubes icon"></i></button>
             <div class="two fields">
@@ -32,7 +27,7 @@
             </div>
         </form>
         <form class="ui form" asp-controller="Character" asp-action="AddExperience">
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
             <input type="hidden" name="From" value="Adventure" />
             <button class="right floated ui purple icon button" data-tooltip="Add Experience"><i class="lab icon"></i></button>
             <div class="two fields">

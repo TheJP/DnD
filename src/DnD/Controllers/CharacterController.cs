@@ -30,7 +30,7 @@ namespace DnD.Controllers
 
         private async Task<Character> CharacterFromViewModel(CharacterViewModel viewModel, Character character = null)
         {
-            if(character == null) { character = new Character(); }
+            if (character == null) { character = new Character(); }
             character.Name = viewModel.Name;
             character.Gender = viewModel.Gender;
             character.RaceId = viewModel.RaceId;
@@ -147,6 +147,19 @@ namespace DnD.Controllers
             context.Characters.Remove(character);
             await context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddGold(int id, int amount, string description, string from)
+        {
+            var participation = await context.AdventureParticipations.SingleAsync(ap => ap.Id == id);
+            return RedirectToAction
+            (
+                "Details",
+                from == "Adventure" ? "Adventure" : "Character",
+                new { Id = (from == "Adventure" ? participation.AdventureId : participation.AdventurerId) }
+            );
         }
 
         private bool CharacterExists(int id)

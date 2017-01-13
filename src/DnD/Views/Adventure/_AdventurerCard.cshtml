@@ -3,10 +3,17 @@
 <div class="ui card">
     @await Html.PartialAsync("_CharacterCardHeader", Model.Adventurer)
     <div class="content">
+        Id: @Model.Id<br />
+        Adventure: @Model.AdventureId<br />
+        Adventurer: @Model.AdventurerId
+    </div>
+    <div class="content">
         <form class="ui form" asp-controller="Character" asp-action="AddGold">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="From" value="Adventure" />
             <button class="right floated ui yellow icon button" data-tooltip="Add Gold"><i class="cubes icon"></i></button>
-            <div class="fields">
-                <div class="field" data-tooltip="How much Gold this Adventurer earned or lost">
+            <div class="two fields">
+                <div class="field" data-tooltip="How much gold this adventurer earned or lost">
                     <div class="ui corner labeled input">
                         <input placeholder="Amount" />
                         <div class="ui yellow corner label">
@@ -25,9 +32,11 @@
             </div>
         </form>
         <form class="ui form" asp-controller="Character" asp-action="AddExperience">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="From" value="Adventure" />
             <button class="right floated ui purple icon button" data-tooltip="Add Experience"><i class="lab icon"></i></button>
-            <div class="fields">
-                <div class="field" data-tooltip="How much Experience this Adventurer gained">
+            <div class="two fields">
+                <div class="field" data-tooltip="How much experience this adventurer gained">
                     <div class="ui corner labeled input">
                         <input placeholder="Amount" />
                         <div class="ui purple corner label">
@@ -45,5 +54,6 @@
                 </div>
             </div>
         </form>
+        <a asp-controller="Character" asp-action="AddBuff" asp-route-id="@Model.Id" class="right floated green ui labeled icon button" data-tooltip="Add items or attribute buffs"><i class="trophy icon"></i> Add Other Loot</a>
     </div>
 </div>

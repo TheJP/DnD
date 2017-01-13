@@ -63,5 +63,25 @@ namespace DnD.Services
             }
             catch (Exception e) { logger.LogError("Exception while updating character: {0}", e.Message); }
         }
+
+        public async Task AddGold(Gold gold)
+        {
+            try
+            {
+                context.Gold.Add(gold);
+                await context.SaveChangesAsync();
+            }
+            catch (Exception e) { logger.LogError("Exception while adding gold to character: {0}", e.Message); }
+        }
+
+        public async Task AddExperience(Experience experience)
+        {
+            try
+            {
+                context.Experience.Add(experience);
+                await context.SaveChangesAsync();
+            }
+            catch (Exception e) { logger.LogError("Exception while adding experience to character: {0}", e.Message); }
+        }
     }
 }

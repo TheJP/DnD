@@ -43,18 +43,18 @@ namespace DnD.Models.CharacterViewModels
                 }
                 if (InitialLife < 1)
                 {
-                    yield return new ValidationResult($"Initial Life has to be greater than 0.", new[] { nameof(InitialLife) });
+                    yield return new ValidationResult("Initial Life has to be greater than 0.", new[] { nameof(InitialLife) });
                 }
                 if (InitialMana < 0)
                 {
-                    yield return new ValidationResult($"Initial Mana has to be greater than or equal to 0.", new[] { nameof(InitialMana) });
+                    yield return new ValidationResult("Initial Mana has to be greater than or equal to 0.", new[] { nameof(InitialMana) });
                 }
             }
 
             var context = (ApplicationDbContext)validationContext.GetService(typeof(ApplicationDbContext));
             if(!context.Races.Any(r => r.Id == RaceId))
             {
-                yield return new ValidationResult($"An unkown race was selected.", new[] { nameof(RaceId) });
+                yield return new ValidationResult("An unkown race was selected.", new[] { nameof(RaceId) });
             }
         }
     }

@@ -151,15 +151,19 @@ namespace DnD.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddGold(int id, int amount, string description, string from)
+        public async Task<IActionResult> AddGold(AddGoldViewModel viewModel, string from)
         {
-            var participation = await context.AdventureParticipations.SingleAsync(ap => ap.Id == id);
-            return RedirectToAction
-            (
-                "Details",
-                from == "Adventure" ? "Adventure" : "Character",
-                new { Id = (from == "Adventure" ? participation.AdventureId : participation.AdventurerId) }
-            );
+            var participation = await context.AdventureParticipations.SingleAsync(ap => ap.Id == viewModel.Id);
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction
+                (
+                    "Details",
+                    from == "Adventure" ? "Adventure" : "Character",
+                    new { Id = (from == "Adventure" ? participation.AdventureId : participation.AdventurerId) }
+                );
+            }
+            return View(viewModel);
         }
 
         private bool CharacterExists(int id)

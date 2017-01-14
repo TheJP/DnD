@@ -22,17 +22,17 @@ namespace DnD.Models.AdventureViewModels
             var context = (ApplicationDbContext)validationContext.GetService(typeof(ApplicationDbContext));
             if (!context.Adventures.Any(a => a.Id == AdventureId))
             {
-                yield return new ValidationResult($"An unkown adventure was selected.", new[] { nameof(AdventureId) });
+                yield return new ValidationResult("An unkown adventure was selected.", new[] { nameof(AdventureId) });
             }
 
             if (context.AdventureParticipations.Any(ap => ap.AdventureId == AdventureId && Adventurers.Contains(ap.AdventurerId)))
             {
-                yield return new ValidationResult($"One or more adventurers were already added to this adventure.", new[] { nameof(Adventurers) });
+                yield return new ValidationResult("One or more adventurers were already added to this adventure.", new[] { nameof(Adventurers) });
             }
             //Linq to SQL should optimise this to a "WHERE IN" query
             else if (context.Characters.Count(c => Adventurers.Contains(c.Id)) != Adventurers.Count())
             {
-                yield return new ValidationResult($"One or more unkown adventurers.", new[] { nameof(Adventurers) });
+                yield return new ValidationResult("One or more unkown adventurers.", new[] { nameof(Adventurers) });
             }
         }
     }

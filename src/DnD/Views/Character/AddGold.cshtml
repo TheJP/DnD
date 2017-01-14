@@ -1,0 +1,26 @@
+﻿@model AddGoldViewModel
+
+@{
+    ViewData["Title"] = "Add Gold";
+}
+
+<form class="ui form" asp-action="AddGold">
+    <input type="hidden" asp-for="Id" />
+    <div class="field" data-tooltip="How much gold this adventurer earned or lost">
+        <div class="ui corner labeled input">
+            <input placeholder="Amount" />
+            <div class="ui yellow corner label">
+                <i class="cubes icon"></i>
+            </div>
+        </div>
+    </div>
+    <div class="field" data-tooltip="Optional Description">
+        <div class="ui corner labeled input">
+            <input placeholder="Description" />
+            <div class="ui yellow corner label">
+                <i class="write icon"></i>
+            </div>
+        </div>
+    </div>
+    <button class="ui yellow icon labeled button" data-tooltip="Add Gold"><i class="cubes icon"></i> Add Gold</button>
+</form>

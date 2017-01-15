@@ -50,5 +50,6 @@
             </div>
         </form>
         <a asp-controller="Character" asp-action="AddBuff" asp-route-id="@Model.Id" class="right floated green ui labeled icon button" data-tooltip="Add items or attribute buffs"><i class="trophy icon"></i> Add Other Loot</a>
+        <a asp-action="RemoveAdventurer" asp-route-id="@Model.Id" class="right floated red ui labeled icon button" data-tooltip="Remove @Model.Adventurer.Name from this adventure"><i class="delete icon"></i> Remove Adventurer</a>
     </div>
 </div>

@@ -3,6 +3,9 @@
 <div class="ui card">
     @await Html.PartialAsync("_CharacterCardHeader", Model.Adventurer)
     <div class="content">
+
+    </div>
+    <div class="content">
         <form class="ui form" asp-controller="Character" asp-action="AddGold">
             <input type="hidden" asp-for="AdventureId" />
             <input type="hidden" asp-for="AdventurerId" />

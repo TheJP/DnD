@@ -64,7 +64,7 @@ namespace DnD.Services
             catch (Exception e) { logger.LogError("Exception while updating character: {0}", e.Message); }
         }
 
-        public async Task AddGold(Gold gold)
+        public async Task AddGoldAsync(Gold gold)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace DnD.Services
             catch (Exception e) { logger.LogError("Exception while adding gold to character: {0}", e.Message); }
         }
 
-        public async Task AddExperience(Experience experience)
+        public async Task AddExperienceAsync(Experience experience)
         {
             try
             {

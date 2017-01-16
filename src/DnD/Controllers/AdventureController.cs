@@ -74,8 +74,12 @@ namespace DnD.Controllers
                 .Include(a => a.Previous)
                 .Include(a => a.Next)
                 .Include(a => a.Adventurers)
-                    .ThenInclude(p => p.Adventurer)
+                    .ThenInclude(ap => ap.Adventurer)
                     .ThenInclude(c => c.Race)
+                .Include(a => a.Adventurers)
+                    .ThenInclude(ap => ap.GoldLoot)
+                .Include(a => a.Adventurers)
+                    .ThenInclude(ap => ap.ExperienceLoot)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (adventure == null) { return NotFound(); }
             PrepareAdventurersSelect(id.Value);

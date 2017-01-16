@@ -11,7 +11,7 @@ namespace DnD.Models.CharacterViewModels
     public class AddGoldViewModel : IValidatableObject
     {
         [Display(Name = "Adventure")]
-        public int AdventureId { get; set; }
+        public int? AdventureId { get; set; }
 
         [Display(Name = "Character")]
         public int AdventurerId { get; set; }
@@ -34,7 +34,7 @@ namespace DnD.Models.CharacterViewModels
             }
 
             var context = (ApplicationDbContext)validationContext.GetService(typeof(ApplicationDbContext));
-            if(!context.Adventures.Any(a => a.Id == AdventureId))
+            if (AdventureId.HasValue && !context.Adventures.Any(a => a.Id == AdventureId.Value))
             {
                 yield return new ValidationResult("An unkown adventure was selected", new[] { nameof(AdventureId) });
             }
@@ -43,15 +43,14 @@ namespace DnD.Models.CharacterViewModels
             {
                 yield return new ValidationResult("An unkown character was selected", new[] { nameof(AdventurerId) });
             }
-
-            if(!context.AdventureParticipations.Any(ap => ap.AdventurerId == AdventurerId && ap.AdventureId == AdventureId))
-            {
-                yield return new ValidationResult("The selected character does not take part in the selected adventure", new[] { nameof(AdventureId), nameof(AdventurerId) });
-            }
-
-            if (Amount + context.Gold.Where(g => g.CharacterId == AdventurerId).Sum(g => g.Value) < 0)
+            else if (Amount + context.Gold.Where(g => g.CharacterId == AdventurerId).Sum(g => g.Value) < 0)
             {
                 yield return new ValidationResult("This change would lead to a negative gold balance and is therefore not allowed", new[] { nameof(Amount) });
+            }
+
+            if(AdventureId.HasValue && !context.AdventureParticipations.Any(ap => ap.AdventurerId == AdventurerId && ap.AdventureId == AdventureId.Value))
+            {
+                yield return new ValidationResult("The selected character does not take part in the selected adventure", new[] { nameof(AdventureId), nameof(AdventurerId) });
             }
         }
     }

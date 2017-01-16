@@ -155,13 +155,29 @@ namespace DnD.Controllers
         {
             if (ModelState.IsValid)
             {
-                var participation = await context.AdventureParticipations
-                    .SingleAsync(ap => ap.AdventureId == viewModel.AdventureId && ap.AdventurerId == viewModel.AdventurerId);
+                //Prepare new Gold entity
+                var newGold = new Gold()
+                {
+                    Value = viewModel.Amount,
+                    Description = viewModel.Description,
+                    CharacterId = viewModel.AdventurerId
+                };
+                if (viewModel.AdventureId.HasValue)
+                {
+                    var participation = await context.AdventureParticipations
+                        .SingleAsync(ap => ap.AdventureId == viewModel.AdventureId && ap.AdventurerId == viewModel.AdventurerId);
+                    newGold.LootFromId = participation.Id;
+                }
+
+                //Add Gold to database
+                await manager.AddGoldAsync(newGold);
+
+                //Redirect back to character or adventure
+                var viewAdventure = viewModel.From == "Adventure" && viewModel.AdventureId.HasValue;
                 return RedirectToAction
                 (
-                    "Details",
-                    viewModel.From == "Adventure" ? "Adventure" : "Character",
-                    new { Id = (viewModel.From == "Adventure" ? participation.AdventureId : participation.AdventurerId) }
+                    "Details", viewAdventure ? "Adventure" : "Character",
+                    new { Id = (viewAdventure ? viewModel.AdventureId.Value : viewModel.AdventurerId) }
                 );
             }
             var adventures = context.Adventures

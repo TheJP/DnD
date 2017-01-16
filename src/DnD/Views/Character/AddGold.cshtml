@@ -8,7 +8,10 @@
     @await Html.PartialAsync("_FormErrorSummary")
     <input type="hidden" asp-for="From" />
     <div class="field">
-        <label asp-for="AdventureId"></label>
+        <label>
+            @Html.DisplayNameFor(a => a.AdventureId)
+            <a class="ui tiny red label dropdown-reset" data-tooltip="clear drop down"><i class="remove icon"></i>clear</a>
+        </label>
         <select asp-for="AdventureId" asp-items="ViewBag.Adventures" class="ui selection search dropdown create-default"></select>
         <div class="ui pointing red basic label error-label">
             <span asp-validation-for="AdventureId"></span>

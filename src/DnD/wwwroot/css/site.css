@@ -5,3 +5,11 @@
 .field.error .ui.label.error-label {
     display: inline-block;
 }
+
+.no-grow {
+    flex-grow: 0 !important;
+}
+
+.loot-label .detail {
+    margin-left: 5px !important;
+}

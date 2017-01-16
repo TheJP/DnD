@@ -1,6 +1,6 @@
 ﻿@model DnD.Models.Character
 
-<div class="content">
+<div class="content no-grow">
     <div class="right floated meta">@Html.DisplayFor(model => model.Race.Name)</div>
     <div class="header">
         <a asp-action="Details" asp-controller="Character" asp-route-id="@Model.Id">@Html.DisplayFor(model => model.Name)</a>

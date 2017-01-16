@@ -2,9 +2,36 @@
 
 <div class="ui card">
     @await Html.PartialAsync("_CharacterCardHeader", Model.Adventurer)
-    <div class="content">
-
-    </div>
+    @if (Model.GoldLoot.Count > 0 || Model.ExperienceLoot.Count > 0)
+    {
+        <div class="content">
+            <div class="ui yellow labels">
+                @foreach (var gold in Model.GoldLoot)
+                {
+                    <div class="ui label loot-label">
+                        <i class="cubes icon"></i>@gold.Value
+                        <a asp-controller="Character" asp-action="RemoveGold" asp-route-id="@gold.Id" data-tooltip="Remove this loot entry"><i class="delete icon"></i></a>@*
+                        *@@if (!string.IsNullOrWhiteSpace(gold.Description)){<div class="detail">@gold.Description</div>}
+                    </div>
+                }
+            </div>
+            <div class="ui purple labels">
+                @foreach (var experience in Model.ExperienceLoot)
+                {
+                    <div class="ui label loot-label">
+                        <i class="lab icon"></i>@experience.Value
+                        <a asp-controller="Character" asp-action="RemoveExperience" asp-route-id="@experience.Id" data-tooltip="Remove this loot entry"><i class="delete icon"></i></a>@*
+                        *@@if (!string.IsNullOrWhiteSpace(experience.Description)){<div class="detail">@experience.Description</div>}
+                    </div>
+                }
+            </div>
+            <div class="ui labels">
+                <b>Adventure Total</b>
+                <span class="ui yellow label"><i class="cubes icon"></i>@Model.GoldLoot.Sum(g => g.Value)</span>
+                <span class="ui purple label"><i class="lab icon"></i>@Model.ExperienceLoot.Sum(g => g.Value)</span>
+            </div>
+        </div>
+    }
     <div class="content">
         <form class="ui form" asp-controller="Character" asp-action="AddGold">
             <input type="hidden" asp-for="AdventureId" />
@@ -55,6 +82,8 @@
             </div>
         </form>
         <a asp-controller="Character" asp-action="AddBuff" asp-route-id="@Model.Id" class="right floated green ui right labeled icon button" data-tooltip="Add items or attribute buffs"><i class="trophy icon"></i>Add Other Loot</a>
+    </div>
+    <div class="extra content">
         <a asp-action="RemoveAdventurer" asp-route-id="@Model.Id" class="right floated red ui right labeled icon button" data-tooltip="Remove @Model.Adventurer.Name from this adventure"><i class="delete icon"></i>Remove</a>
     </div>
 </div>

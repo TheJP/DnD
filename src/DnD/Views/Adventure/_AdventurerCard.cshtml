@@ -4,13 +4,14 @@
     @await Html.PartialAsync("_CharacterCardHeader", Model.Adventurer)
     <div class="content">
         <form class="ui form" asp-controller="Character" asp-action="AddGold">
-            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <input type="hidden" asp-for="AdventureId" />
+            <input type="hidden" asp-for="AdventurerId" />
             <input type="hidden" name="From" value="Adventure" />
             <button class="right floated ui yellow icon button" data-tooltip="Add Gold"><i class="cubes icon"></i></button>
             <div class="two fields">
                 <div class="field" data-tooltip="How much gold this adventurer earned or lost">
                     <div class="ui corner labeled input">
-                        <input placeholder="Amount" />
+                        <input placeholder="Amount" id="Amount" name="Amount" />
                         <div class="ui yellow corner label">
                             <i class="cubes icon"></i>
                         </div>
@@ -18,7 +19,7 @@
                 </div>
                 <div class="field" data-tooltip="Optional Description">
                     <div class="ui corner labeled input">
-                        <input placeholder="Description" />
+                        <input placeholder="Description" id="Description" name="Description" />
                         <div class="ui yellow corner label">
                             <i class="write icon"></i>
                         </div>
@@ -27,13 +28,14 @@
             </div>
         </form>
         <form class="ui form" asp-controller="Character" asp-action="AddExperience">
-            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <input type="hidden" asp-for="AdventureId" />
+            <input type="hidden" asp-for="AdventurerId" />
             <input type="hidden" name="From" value="Adventure" />
             <button class="right floated ui purple icon button" data-tooltip="Add Experience"><i class="lab icon"></i></button>
             <div class="two fields">
                 <div class="field" data-tooltip="How much experience this adventurer gained">
                     <div class="ui corner labeled input">
-                        <input placeholder="Amount" />
+                        <input placeholder="Amount" id="Amount" name="Amount" />
                         <div class="ui purple corner label">
                             <i class="lab icon"></i>
                         </div>
@@ -41,7 +43,7 @@
                 </div>
                 <div class="field" data-tooltip="Optional Description">
                     <div class="ui corner labeled input">
-                        <input placeholder="Description" />
+                        <input placeholder="Description" id="Description" name="Description" />
                         <div class="ui purple corner label">
                             <i class="write icon"></i>
                         </div>
@@ -49,7 +51,7 @@
                 </div>
             </div>
         </form>
-        <a asp-controller="Character" asp-action="AddBuff" asp-route-id="@Model.Id" class="right floated green ui labeled icon button" data-tooltip="Add items or attribute buffs"><i class="trophy icon"></i> Add Other Loot</a>
-        <a asp-action="RemoveAdventurer" asp-route-id="@Model.Id" class="right floated red ui labeled icon button" data-tooltip="Remove @Model.Adventurer.Name from this adventure"><i class="delete icon"></i> Remove Adventurer</a>
+        <a asp-controller="Character" asp-action="AddBuff" asp-route-id="@Model.Id" class="right floated green ui right labeled icon button" data-tooltip="Add items or attribute buffs"><i class="trophy icon"></i>Add Other Loot</a>
+        <a asp-action="RemoveAdventurer" asp-route-id="@Model.Id" class="right floated red ui right labeled icon button" data-tooltip="Remove @Model.Adventurer.Name from this adventure"><i class="delete icon"></i>Remove</a>
     </div>
 </div>

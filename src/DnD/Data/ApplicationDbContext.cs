@@ -54,6 +54,8 @@ namespace DnD.Data
                 .Property(a => a.Date)
                 .HasDefaultValueSql("getdate()");
 
+            //Gold and experience loot from an adventure have to be deleted before
+            //the Adventure / AdventureParticipation can be deleted!
             builder.Entity<Gold>()
                 .Property(g => g.Date)
                 .HasDefaultValueSql("getdate()");

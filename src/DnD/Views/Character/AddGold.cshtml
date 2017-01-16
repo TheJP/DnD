@@ -4,22 +4,35 @@
     ViewData["Title"] = "Add Gold";
 }
 
-<form class="ui form" asp-action="AddGold">
-    <input type="hidden" asp-for="Id" />
+<form class="ui form summary" asp-action="AddGold">
+    @await Html.PartialAsync("_FormErrorSummary")
+    <input type="hidden" asp-for="From" />
+    <div class="field">
+        <label asp-for="AdventureId"></label>
+        <select asp-for="AdventureId" asp-items="ViewBag.Adventures" class="ui selection search dropdown create-default"></select>
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="AdventureId"></span>
+        </div>
+    </div>
+    <div class="field">
+        <label asp-for="AdventurerId"></label>
+        <select asp-for="AdventurerId" asp-items="ViewBag.Adventurers" class="ui selection search dropdown create-default"></select>
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="AdventurerId"></span>
+        </div>
+    </div>
     <div class="field" data-tooltip="How much gold this adventurer earned or lost">
-        <div class="ui corner labeled input">
-            <input placeholder="Amount" />
-            <div class="ui yellow corner label">
-                <i class="cubes icon"></i>
-            </div>
+        <label asp-for="Amount"></label>
+        <input asp-for="Amount" placeholder="Amount" />
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="Amount"></span>
         </div>
     </div>
     <div class="field" data-tooltip="Optional Description">
-        <div class="ui corner labeled input">
-            <input placeholder="Description" />
-            <div class="ui yellow corner label">
-                <i class="write icon"></i>
-            </div>
+        <label asp-for="Description"></label>
+        <input asp-for="Description" placeholder="Description" />
+        <div class="ui pointing red basic label error-label">
+            <span asp-validation-for="Description"></span>
         </div>
     </div>
     <button class="ui yellow icon labeled button" data-tooltip="Add Gold"><i class="cubes icon"></i> Add Gold</button>

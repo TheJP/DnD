@@ -64,7 +64,7 @@ namespace DnD.Controllers
 
         public IActionResult Create()
         {
-            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name");
+            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), nameof(Race.Id), nameof(Race.Name));
             return View();
         }
 
@@ -78,7 +78,7 @@ namespace DnD.Controllers
                 await manager.CreateAsync(newCharacter);
                 return RedirectToAction("Details", new { Id = newCharacter.Id });
             }
-            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", viewModel.RaceId);
+            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), nameof(Race.Id), nameof(Race.Name), viewModel.RaceId);
             return View(viewModel);
         }
 
@@ -88,7 +88,7 @@ namespace DnD.Controllers
             var character = await context.Characters.SingleOrDefaultAsync(m => m.Id == id);
             if (character == null) { return NotFound(); }
 
-            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", character.RaceId);
+            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), nameof(Race.Id), nameof(Race.Name), character.RaceId);
             return View(new CharacterViewModel()
             {
                 Id = character.Id,
@@ -123,7 +123,7 @@ namespace DnD.Controllers
                 return RedirectToAction("Details", new { Id = id });
             }
 
-            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), "Id", "Name", viewModel.RaceId);
+            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), nameof(Race.Id), nameof(Race.Name), viewModel.RaceId);
             return View(viewModel);
         }
 
@@ -151,18 +151,24 @@ namespace DnD.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddGold(AddGoldViewModel viewModel, string from)
+        public async Task<IActionResult> AddGold(AddGoldViewModel viewModel)
         {
-            var participation = await context.AdventureParticipations.SingleAsync(ap => ap.Id == viewModel.Id);
             if (ModelState.IsValid)
             {
+                var participation = await context.AdventureParticipations
+                    .SingleAsync(ap => ap.AdventureId == viewModel.AdventureId && ap.AdventurerId == viewModel.AdventurerId);
                 return RedirectToAction
                 (
                     "Details",
-                    from == "Adventure" ? "Adventure" : "Character",
-                    new { Id = (from == "Adventure" ? participation.AdventureId : participation.AdventurerId) }
+                    viewModel.From == "Adventure" ? "Adventure" : "Character",
+                    new { Id = (viewModel.From == "Adventure" ? participation.AdventureId : participation.AdventurerId) }
                 );
             }
+            var adventures = context.Adventures
+                .OrderByDescending(a => a.Date)
+                .Select(a => new { Id = a.Id, Name = $"{a.Name} ({a.Date:d})" });
+            ViewData["Adventures"] = new SelectList(adventures, "Id", "Name", viewModel.AdventureId);
+            ViewData["Adventurers"] = new SelectList(context.Characters.OrderBy(c => c.Name), nameof(Adventure.Id), nameof(Adventure.Name), viewModel.AdventureId);
             return View(viewModel);
         }
 

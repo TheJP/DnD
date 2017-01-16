@@ -42,7 +42,7 @@ namespace DnD.Controllers
 
         private void PrepareSelectLists(string dungeonMasterId, int? previousId = null, int? nextId = null)
         {
-            ViewData["DungeonMasters"] = new SelectList(context.Users.OrderBy(u => u.DisplayName), "Id", "DisplayName", dungeonMasterId);
+            ViewData["DungeonMasters"] = new SelectList(context.Users.OrderBy(u => u.DisplayName), nameof(ApplicationUser.Id), nameof(ApplicationUser.DisplayName), dungeonMasterId);
             var adventures = context.Adventures
                 .OrderByDescending(a => a.Date)
                 .Select(a => new { Id = a.Id, Name = $"{a.Name} ({a.Date:d})" });
@@ -55,7 +55,7 @@ namespace DnD.Controllers
             var characters = context.Characters
                 .Where(c => !c.Adventures.Any(ap => ap.AdventureId == adventureId))
                 .OrderBy(c => c.Name);
-            ViewData["Characters"] = new MultiSelectList(characters, "Id", "Name", selected);
+            ViewData["Characters"] = new MultiSelectList(characters, nameof(Character.Id), nameof(Character.Name), selected);
         }
 
         public async Task<IActionResult> Index()
@@ -184,7 +184,7 @@ namespace DnD.Controllers
                 return RedirectToAction("Details", new { Id = viewModel.AdventureId });
             }
             PrepareAdventurersSelect(viewModel.AdventureId, viewModel.Adventurers);
-            ViewData["Adventures"] = new SelectList(context.Adventures.OrderByDescending(a => a.Date), "Id", "Name", viewModel.AdventureId);
+            ViewData["Adventures"] = new SelectList(context.Adventures.OrderByDescending(a => a.Date), nameof(Adventure.Id), nameof(Adventure.Name), viewModel.AdventureId);
             return View(viewModel);
         }
 

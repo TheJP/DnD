@@ -2,7 +2,8 @@
 
 <div class="ui card">
     @await Html.PartialAsync("_CharacterCardHeader", Model.Adventurer)
-    @if (Model.GoldLoot.Count > 0 || Model.ExperienceLoot.Count > 0)
+    @{ bool showLoot = Model.GoldLoot.Count > 0 || Model.ExperienceLoot.Count > 0; }
+    @if (showLoot)
     {
         <div class="content">
             <div class="ui yellow labels">
@@ -10,7 +11,7 @@
                 {
                     <div class="ui label loot-label">
                         <i class="cubes icon"></i>@gold.Value
-                        <a asp-controller="Character" asp-action="RemoveGold" asp-route-id="@gold.Id" data-tooltip="Remove this loot entry"><i class="delete icon"></i></a>@*
+                        <a asp-controller="Character" asp-action="RemoveGold" asp-route-id="@gold.Id" data-tooltip="Remove this gold loot"><i class="delete icon"></i></a>@*
                         *@@if (!string.IsNullOrWhiteSpace(gold.Description)){<div class="detail">@gold.Description</div>}
                     </div>
                 }
@@ -20,7 +21,7 @@
                 {
                     <div class="ui label loot-label">
                         <i class="lab icon"></i>@experience.Value
-                        <a asp-controller="Character" asp-action="RemoveExperience" asp-route-id="@experience.Id" data-tooltip="Remove this loot entry"><i class="delete icon"></i></a>@*
+                        <a asp-controller="Character" asp-action="RemoveExperience" asp-route-id="@experience.Id" data-tooltip="Remove this experience loot"><i class="delete icon"></i></a>@*
                         *@@if (!string.IsNullOrWhiteSpace(experience.Description)){<div class="detail">@experience.Description</div>}
                     </div>
                 }
@@ -32,7 +33,7 @@
             </div>
         </div>
     }
-    <div class="content">
+    <div class="content@(showLoot ? " no-grow" : "")">
         <form class="ui form" asp-controller="Character" asp-action="AddGold">
             <input type="hidden" asp-for="AdventureId" />
             <input type="hidden" asp-for="AdventurerId" />

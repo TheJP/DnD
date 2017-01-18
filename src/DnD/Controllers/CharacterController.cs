@@ -40,6 +40,25 @@ namespace DnD.Controllers
             return character;
         }
 
+        private IActionResult RedirectToAdventureOrCharacter(string from, int? adventureId, int adventurerId)
+        {
+            var viewAdventure = from == "Adventure" && adventureId.HasValue;
+            return RedirectToAction
+            (
+                "Details", viewAdventure ? "Adventure" : "Character",
+                new { Id = (viewAdventure ? adventureId.Value : adventurerId) }
+            );
+        }
+
+        private void PrepareRaceViewData(int raceId) =>
+            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), nameof(Race.Id), nameof(Race.Name), raceId);
+
+        private void PrepareLootViewData(int? adventureId, int adventurerId)
+        {
+            ViewData["Adventures"] = new SelectList(context.Adventures.OrderByDescending(a => a.Date), "Id", "DisplayName", adventureId);
+            ViewData["Adventurers"] = new SelectList(context.Characters.OrderBy(c => c.Name), nameof(Adventure.Id), nameof(Adventure.Name), adventurerId);
+        }
+
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = context.Characters
@@ -78,7 +97,8 @@ namespace DnD.Controllers
                 await manager.CreateAsync(newCharacter);
                 return RedirectToAction("Details", new { Id = newCharacter.Id });
             }
-            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), nameof(Race.Id), nameof(Race.Name), viewModel.RaceId);
+
+            PrepareRaceViewData(viewModel.RaceId);
             return View(viewModel);
         }
 
@@ -88,7 +108,7 @@ namespace DnD.Controllers
             var character = await context.Characters.SingleOrDefaultAsync(m => m.Id == id);
             if (character == null) { return NotFound(); }
 
-            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), nameof(Race.Id), nameof(Race.Name), character.RaceId);
+            PrepareRaceViewData(character.RaceId);
             return View(new CharacterViewModel()
             {
                 Id = character.Id,
@@ -123,7 +143,7 @@ namespace DnD.Controllers
                 return RedirectToAction("Details", new { Id = id });
             }
 
-            ViewData["RaceItems"] = new SelectList(context.Races.OrderBy(r => r.Name), nameof(Race.Id), nameof(Race.Name), viewModel.RaceId);
+            PrepareRaceViewData(viewModel.RaceId);
             return View(viewModel);
         }
 
@@ -173,18 +193,41 @@ namespace DnD.Controllers
                 await manager.AddGoldAsync(newGold);
 
                 //Redirect back to character or adventure
-                var viewAdventure = viewModel.From == "Adventure" && viewModel.AdventureId.HasValue;
-                return RedirectToAction
-                (
-                    "Details", viewAdventure ? "Adventure" : "Character",
-                    new { Id = (viewAdventure ? viewModel.AdventureId.Value : viewModel.AdventurerId) }
-                );
+                return RedirectToAdventureOrCharacter(viewModel.From, viewModel.AdventureId, viewModel.AdventurerId);
             }
-            var adventures = context.Adventures
-                .OrderByDescending(a => a.Date)
-                .Select(a => new { Id = a.Id, Name = $"{a.Name} ({a.Date:d})" });
-            ViewData["Adventures"] = new SelectList(adventures, "Id", "Name", viewModel.AdventureId);
-            ViewData["Adventurers"] = new SelectList(context.Characters.OrderBy(c => c.Name), nameof(Adventure.Id), nameof(Adventure.Name), viewModel.AdventureId);
+
+            PrepareLootViewData(viewModel.AdventureId, viewModel.AdventurerId);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddExperience(AddExperienceViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                //Prepare new Experience entity
+                var newExperience = new Experience()
+                {
+                    Value = viewModel.Amount,
+                    Description = viewModel.Description,
+                    CharacterId = viewModel.AdventurerId
+                };
+                if (viewModel.AdventureId.HasValue)
+                {
+                    var participation = await context.AdventureParticipations
+                        .SingleAsync(ap => ap.AdventureId == viewModel.AdventureId && ap.AdventurerId == viewModel.AdventurerId);
+                    newExperience.LootFromId = participation.Id;
+                }
+
+                //Add Gold to database
+                await manager.AddExperienceAsync(newExperience);
+
+                //Redirect back to character or adventure
+                return RedirectToAdventureOrCharacter(viewModel.From, viewModel.AdventureId, viewModel.AdventurerId);
+            }
+
+            PrepareLootViewData(viewModel.AdventureId, viewModel.AdventurerId);
             return View(viewModel);
         }
 

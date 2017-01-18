@@ -33,5 +33,7 @@ namespace DnD.Models
 
         [InverseProperty("Adventure")]
         public List<AdventureParticipation> Adventurers { get; set; }
+
+        public string DisplayName => $"{Name} ({Date:d})";
     }
 }

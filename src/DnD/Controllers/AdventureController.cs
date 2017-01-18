@@ -40,7 +40,7 @@ namespace DnD.Controllers
             return adventure;
         }
 
-        private void PrepareSelectLists(string dungeonMasterId, int? previousId = null, int? nextId = null)
+        private void PrepareFormViewData(string dungeonMasterId, int? previousId = null, int? nextId = null)
         {
             ViewData["DungeonMasters"] = new SelectList(context.Users.OrderBy(u => u.DisplayName), nameof(ApplicationUser.Id), nameof(ApplicationUser.DisplayName), dungeonMasterId);
             var adventures = context.Adventures
@@ -50,7 +50,7 @@ namespace DnD.Controllers
             ViewData["Next"] = new SelectList(adventures, "Id", "Name", nextId);
         }
 
-        private void PrepareAdventurersSelect(int adventureId, IEnumerable<int> selected = null)
+        private void PrepareAdventurersViewData(int adventureId, IEnumerable<int> selected = null)
         {
             var characters = context.Characters
                 .Where(c => !c.Adventures.Any(ap => ap.AdventureId == adventureId))
@@ -82,7 +82,7 @@ namespace DnD.Controllers
                     .ThenInclude(ap => ap.ExperienceLoot)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (adventure == null) { return NotFound(); }
-            PrepareAdventurersSelect(id.Value);
+            PrepareAdventurersViewData(id.Value);
 
             return View(adventure);
         }
@@ -90,7 +90,7 @@ namespace DnD.Controllers
         public async Task<IActionResult> Create()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            PrepareSelectLists(user.Id);
+            PrepareFormViewData(user.Id);
             return View();
         }
 
@@ -107,7 +107,7 @@ namespace DnD.Controllers
                 await manager.CreateAsync(newAdventure);
                 return RedirectToAction("Details", new { Id = newAdventure.Id });
             }
-            PrepareSelectLists(viewModel.DungeonMasterId, viewModel.PreviousId, viewModel.NextId);
+            PrepareFormViewData(viewModel.DungeonMasterId, viewModel.PreviousId, viewModel.NextId);
             return View(viewModel);
         }
 
@@ -117,7 +117,7 @@ namespace DnD.Controllers
             var adventure = await context.Adventures.SingleOrDefaultAsync(m => m.Id == id);
             if (adventure == null) { return NotFound(); }
 
-            PrepareSelectLists(adventure.DungeonMasterId, adventure.PreviousId, adventure.NextId);
+            PrepareFormViewData(adventure.DungeonMasterId, adventure.PreviousId, adventure.NextId);
             return View(new AdventureViewModel()
             {
                 Id = adventure.Id,
@@ -153,7 +153,7 @@ namespace DnD.Controllers
                 return RedirectToAction("Details", new { Id = id });
             }
 
-            PrepareSelectLists(viewModel.DungeonMasterId, viewModel.PreviousId, viewModel.NextId);
+            PrepareFormViewData(viewModel.DungeonMasterId, viewModel.PreviousId, viewModel.NextId);
             return View(viewModel);
         }
 
@@ -187,7 +187,7 @@ namespace DnD.Controllers
                 await manager.AddAdventurers(viewModel.AdventureId, viewModel.Adventurers);
                 return RedirectToAction("Details", new { Id = viewModel.AdventureId });
             }
-            PrepareAdventurersSelect(viewModel.AdventureId, viewModel.Adventurers);
+            PrepareAdventurersViewData(viewModel.AdventureId, viewModel.Adventurers);
             ViewData["Adventures"] = new SelectList(context.Adventures.OrderByDescending(a => a.Date), nameof(Adventure.Id), nameof(Adventure.Name), viewModel.AdventureId);
             return View(viewModel);
         }

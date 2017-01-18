@@ -1,10 +1,10 @@
-﻿@model AddGoldViewModel
+﻿@model AddExperienceViewModel
 
 @{
-    ViewData["Title"] = "Add Gold";
+    ViewData["Title"] = "Add Experience";
 }
 
-<form class="ui form summary" asp-action="AddGold">
+<form class="ui form summary" asp-action="AddExperience">
     @await Html.PartialAsync("_FormErrorSummary")
     <input type="hidden" asp-for="From" />
     <div class="field">
@@ -38,5 +38,5 @@
             <span asp-validation-for="Description"></span>
         </div>
     </div>
-    <button class="ui yellow icon labeled button"><i class="cubes icon"></i> Add Gold</button>
+    <button class="ui purple icon labeled button"><i class="lab icon"></i> Add Experience</button>
 </form>

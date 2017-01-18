@@ -11,7 +11,10 @@
                 {
                     <div class="ui label loot-label">
                         <i class="cubes icon"></i>@gold.Value
-                        <a asp-controller="Character" asp-action="RemoveGold" asp-route-id="@gold.Id" data-tooltip="Remove this gold loot"><i class="delete icon"></i></a>@*
+                        <a onclick="$('#gold-form-@gold.Id').submit();" data-tooltip="Remove this gold loot"><i class="delete icon"></i></a>@*
+                        *@<form asp-controller="Character" asp-action="RemoveGold" asp-route-id="@gold.Id" id="gold-form-@gold.Id" class="force-hide">
+                            <input type="hidden" name="From" value="Adventure" />
+                        </form>@*
                         *@@if (!string.IsNullOrWhiteSpace(gold.Description)){<div class="detail">@gold.Description</div>}
                     </div>
                 }
@@ -21,7 +24,10 @@
                 {
                     <div class="ui label loot-label">
                         <i class="lab icon"></i>@experience.Value
-                        <a asp-controller="Character" asp-action="RemoveExperience" asp-route-id="@experience.Id" data-tooltip="Remove this experience loot"><i class="delete icon"></i></a>@*
+                        <a onclick="$('#experience-form-@experience.Id').submit();" data-tooltip="Remove this experience loot"><i class="delete icon"></i></a>@*
+                        *@<form asp-controller="Character" asp-action="RemoveExperience" asp-route-id="@experience.Id" id="experience-form-@experience.Id" class="force-hide">
+                            <input type="hidden" name="From" value="Adventure" />
+                        </form>@*
                         *@@if (!string.IsNullOrWhiteSpace(experience.Description)){<div class="detail">@experience.Description</div>}
                     </div>
                 }

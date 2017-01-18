@@ -83,5 +83,25 @@ namespace DnD.Services
             }
             catch (Exception e) { logger.LogError("Exception while adding experience to character: {0}", e.Message); }
         }
+
+        public async Task RemoveGoldAsync(int id)
+        {
+            try
+            {
+                context.Gold.Remove(await context.Gold.SingleAsync(g => g.Id == id));
+                await context.SaveChangesAsync();
+            }
+            catch (Exception e) { logger.LogError("Exception while removing gold loot: {0}", e.Message); }
+        }
+
+        public async Task RemoveExperienceAsync(int id)
+        {
+            try
+            {
+                context.Experience.Remove(await context.Experience.SingleAsync(e => e.Id == id));
+                await context.SaveChangesAsync();
+            }
+            catch (Exception e) { logger.LogError("Exception while removing experience loot: {0}", e.Message); }
+        }
     }
 }

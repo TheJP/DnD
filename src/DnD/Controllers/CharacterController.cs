@@ -231,6 +231,32 @@ namespace DnD.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveGold(int id, string from)
+        {
+            var gold = await context.Gold.Include(g => g.LootFrom).SingleOrDefaultAsync(g => g.Id == id);
+            if(gold == null) { return NotFound(); }
+            var result = RedirectToAdventureOrCharacter(from, gold.LootFrom == null ? null : (int?)gold.LootFrom.AdventureId, gold.CharacterId);
+
+            context.Remove(gold);
+            await context.SaveChangesAsync();
+            return result;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveExperience(int id, string from)
+        {
+            var experience = await context.Experience.Include(e => e.LootFrom).SingleOrDefaultAsync(e => e.Id == id);
+            if (experience == null) { return NotFound(); }
+            var result = RedirectToAdventureOrCharacter(from, experience.LootFrom == null ? null : (int?)experience.LootFrom.AdventureId, experience.CharacterId);
+
+            context.Remove(experience);
+            await context.SaveChangesAsync();
+            return result;
+        }
+
         private bool CharacterExists(int id)
         {
             return context.Characters.Any(e => e.Id == id);

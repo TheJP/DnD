@@ -13,3 +13,7 @@
 .loot-label .detail {
     margin-left: 5px !important;
 }
+
+.force-hide {
+    display: none !important;
+}
